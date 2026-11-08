@@ -1,0 +1,1767 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>VA Real Estate Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ink:#14202e; --ink-2:#22344a; --paper:#ffffff; --surface:#ffffff; --surface-2:#f5f7f9;
+  --line:#d9dfe7; --line-soft:#e7ecf1; --text:#17222f; --text-2:#51637a; --text-3:#7d8ca1;
+  --brass:#8d6320; --brass-ink:#6d4b16; --brass-soft:#f3e9d6;
+  --pass:#2f6b4f; --pass-soft:#e2efe8; --fail:#a63a32; --fail-soft:#f7e6e4;
+  --warn:#9a6f19; --warn-soft:#f8edd8;
+  --sidebar:#ffffff; --sidebar-text:#51637a; --sidebar-active:#17222f;
+  --shadow:0 1px 2px rgba(20,32,46,.06),0 8px 24px -12px rgba(20,32,46,.18);
+  --r:10px; --r-sm:6px;
+  --f-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-ui:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--f-ui);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;margin:0;text-wrap:balance;letter-spacing:-.01em}
+button{font:inherit;color:inherit}
+a{color:var(--brass-ink);text-decoration:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+.muted{color:var(--text-2)}
+.hidden{display:none!important}
+</style>
+<style>
+/* ---------- auth ---------- */
+#auth{min-height:100vh;display:grid;place-items:center;padding:32px 16px;background:
+  radial-gradient(1200px 500px at 50% -10%, rgba(141,99,32,.10), transparent 60%), var(--paper)}
+.auth-card{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.auth-top{background:var(--surface);border-bottom:1px solid var(--line);padding:28px 28px 24px;text-align:center}
+.auth-top h1{color:var(--text);font-size:26px;line-height:1.2}
+.auth-top p{margin:6px 0 0;color:var(--text-2);font-size:13px}
+.auth-body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:14px}
+.who{display:flex;flex-direction:column;gap:8px}
+.who button{display:flex;align-items:center;gap:12px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;cursor:pointer}
+.who button:hover{border-color:var(--brass);background:var(--surface-2)}
+.who .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--brass-soft);color:var(--brass-ink);flex:none}
+.who .nm{font-weight:600;font-size:14px;line-height:1.2}
+.who .rl{font-size:12px;color:var(--text-2)}
+.seal{width:44px;height:44px;margin:0 auto 10px;border-radius:50%;border:2px solid var(--brass);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;color:var(--brass-ink);font-size:15px}
+/* ---------- shell ---------- */
+#app{display:none;min-height:100vh}
+#app.on{display:grid;grid-template-columns:238px 1fr}
+.side{background:var(--sidebar);color:var(--sidebar-text);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:100vh;position:sticky;top:0;height:100vh}
+.brand{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.brand .mk{width:30px;height:30px;border-radius:7px;background:var(--brass);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:15px;flex:none}
+.brand b{color:var(--text);font-size:14px;font-weight:600;line-height:1.15;display:block}
+.brand span{font-size:11px;color:var(--text-3)}
+.nav{padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;flex:1}
+.nav .sec{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);padding:14px 10px 6px;font-weight:700}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r-sm);color:var(--sidebar-text);font-size:14px;cursor:pointer}
+.nav a:hover{background:var(--surface-2);color:var(--text)}
+.nav a.active{background:var(--brass-soft);color:var(--sidebar-active);font-weight:600;box-shadow:inset 2px 0 0 var(--brass)}
+.nav svg{width:17px;height:17px;flex:none;opacity:.9}
+.side-foot{padding:12px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.side-foot .av{width:30px;height:30px;border-radius:50%;background:var(--brass-soft);color:var(--brass-ink);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.side-foot b{color:var(--text);font-size:13px;display:block;line-height:1.2}
+.side-foot small{font-size:11px;color:var(--text-3)}
+.side-foot .out{margin-left:auto;background:none;border:0;color:var(--text-3);cursor:pointer;font-size:12px}
+.side-foot .out:hover{color:var(--text)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 24px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:var(--r-sm);padding:6px 8px;cursor:pointer}
+.search{flex:1;max-width:460px;position:relative}
+.search input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);color:var(--text);font-size:14px}
+.search svg{position:absolute;left:9px;top:9px;width:15px;height:15px;color:var(--text-3)}
+.topbar .sp{flex:1}
+.icobtn{background:none;border:1px solid var(--line);border-radius:var(--r-sm);width:32px;height:32px;display:grid;place-items:center;cursor:pointer;position:relative}
+.icobtn svg{width:16px;height:16px}
+.dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--fail)}
+.wrap{padding:26px 24px 60px;max-width:1140px;width:100%;margin:0 auto}
+.page-head{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:20px}
+.page-head h1{font-size:27px}
+.page-head p{margin:4px 0 0;color:var(--text-2);font-size:14px}
+.page-head .sp{flex:1}
+/* ---------- primitives ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid{display:grid;gap:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:14px;font-weight:500}
+.btn:hover{background:var(--surface-2)}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.pri:hover{background:var(--ink-2)}
+:root[data-theme="dark"] .btn.pri,:root:not([data-theme="light"]) .btn.pri{}
+.btn.brass{background:var(--brass);border-color:var(--brass);color:#fff}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn.danger{color:var(--fail);border-color:var(--fail)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.pill.ok{background:var(--pass-soft);color:var(--pass)}
+.pill.no{background:var(--fail-soft);color:var(--fail)}
+.pill.wait{background:var(--warn-soft);color:var(--warn)}
+.pill.flat{background:var(--surface-2);color:var(--text-2)}
+.bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brass);border-radius:999px}
+.bar.g i{background:var(--pass)}
+input,select,textarea{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;width:100%}
+label.fld{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--text-2)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);padding:0 12px 8px;font-weight:700;white-space:nowrap}
+td{padding:11px 12px;border-top:1px solid var(--line-soft);vertical-align:middle}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--surface-2)}
+.tbl-wrap{overflow-x:auto}
+.empty{text-align:center;padding:40px 20px;color:var(--text-2)}
+.demo-tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--warn);background:var(--warn-soft);padding:2px 6px;border-radius:4px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:13.5px;z-index:200;box-shadow:var(--shadow)}
+.modal-bg{position:fixed;inset:0;background:rgba(10,18,26,.55);display:grid;place-items:center;padding:16px;z-index:150;overflow-y:auto}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:12px;width:100%;max-width:560px;box-shadow:var(--shadow);max-height:90vh;display:flex;flex-direction:column}
+.modal header{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.modal header h3{font-size:17px;flex:1}
+.modal .body{padding:18px;display:flex;flex-direction:column;gap:13px;overflow-y:auto}
+.modal footer{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.x{background:none;border:0;cursor:pointer;font-size:20px;color:var(--text-3);line-height:1}
+@media (max-width:860px){
+  #app.on{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;width:250px;z-index:100;transform:translateX(-100%);transition:transform .2s}
+  .side.open{transform:none}
+  .burger{display:grid}
+  .wrap{padding:20px 16px 56px}
+  .page-head h1{font-size:23px}
+}
+</style>
+<style>
+/* ---------- continue / dashboard ---------- */
+.continue{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;box-shadow:var(--shadow)}
+.continue .l{flex:1;min-width:230px}
+.continue .eyebrow{color:var(--text-3)}
+.continue h2{color:var(--text);font-size:22px;margin:6px 0 3px}
+.continue p{margin:0;color:var(--text-2);font-size:13.5px}
+.continue .bar{margin-top:12px}
+.continue .bar i{background:var(--brass)}
+.ring{width:84px;height:84px;flex:none}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.stat b{display:block;font-family:var(--f-display);font-size:25px;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:3px}
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.ccard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer}
+.ccard:hover{border-color:var(--brass)}
+.ccard .thumb{height:78px;background:var(--surface-2);border-bottom:1px solid var(--line);display:flex;align-items:flex-end;padding:10px 13px;position:relative}
+.ccard .thumb span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
+.ccard .thumb::after{content:"";position:absolute;right:12px;top:12px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--brass)}
+.ccard .b{padding:13px 14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
+.ccard h3{font-size:16px}
+.ccard .meta{font-size:12.5px;color:var(--text-2);display:flex;justify-content:space-between}
+/* ---------- lesson ---------- */
+.lesson-grid{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start}
+@media (max-width:900px){.lesson-grid{grid-template-columns:1fr}}
+.video{aspect-ratio:16/9;width:100%;max-width:100%;background:var(--surface-2);border-radius:var(--r);overflow:hidden;position:relative;display:grid;place-items:center;border:1px solid var(--line)}
+.video iframe{width:100%;height:100%;border:0;display:block}
+.video .ph{text-align:center;color:var(--text-2);padding:20px}
+.play{width:54px;height:54px;border-radius:50%;background:var(--brass);color:#14202e;border:0;display:grid;place-items:center;cursor:pointer;margin:0 auto 10px}
+.watchbar{margin-top:10px;display:flex;gap:12px;align-items:center;font-size:13px;color:var(--text-2)}
+.watchbar .bar{flex:1}
+.rail{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.rail .hd{padding:12px 14px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}
+.rail .mod{padding:10px 14px 4px;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--text-3);font-weight:700}
+.rail a{display:flex;gap:9px;padding:8px 14px;font-size:13.5px;color:var(--text);cursor:pointer;align-items:flex-start;line-height:1.35}
+.rail a:hover{background:var(--surface-2)}
+.rail a.cur{background:var(--brass-soft);font-weight:600;box-shadow:inset 2px 0 0 var(--brass)}
+.rail a .tick{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line);margin-top:2px;display:grid;place-items:center;font-size:9px;color:#fff}
+.rail a.done .tick{background:var(--pass);border-color:var(--pass)}
+.rail a.lock{opacity:.5;cursor:not-allowed}
+.notes{margin-top:18px}
+.notes h2{font-size:20px;margin-bottom:8px}
+.notes p{color:var(--text-2);margin:0 0 10px}
+.terms{display:grid;gap:8px}
+.term{display:grid;grid-template-columns:150px 1fr;gap:10px;font-size:13.5px;padding:8px 0;border-top:1px solid var(--line-soft)}
+.term b{font-weight:600}
+@media (max-width:560px){.term{grid-template-columns:1fr;gap:2px}}
+.res{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--r-sm);font-size:13.5px}
+/* ---------- quiz ---------- */
+.quiz{max-width:640px;margin:0 auto}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--text-2)}
+.qbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.qbox h2{font-size:19px;margin-bottom:14px;line-height:1.35}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;margin-bottom:8px;font-size:14.5px}
+.opt:hover{border-color:var(--brass)}
+.opt.sel{border-color:var(--brass);background:var(--brass-soft)}
+.opt .k{font-family:var(--f-mono);font-size:12px;color:var(--text-3);flex:none;width:16px}
+.opt.sel .k{color:var(--brass-ink)}
+.result{text-align:center;padding:34px 22px}
+.result .score{font-family:var(--f-display);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+/* ---------- certificate ---------- */
+.cert{background:#fffdf8;color:#1a1408;border:1px solid #e0d4bb;border-radius:8px;padding:38px 34px;text-align:center;position:relative;box-shadow:var(--shadow);max-width:720px;margin:0 auto}
+.cert::before{content:"";position:absolute;inset:11px;border:1px solid #d6c295;border-radius:4px;pointer-events:none}
+.cert .ac{font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#8d6320}
+.cert h2{font-family:var(--f-display);font-size:16px;letter-spacing:.16em;text-transform:uppercase;color:#6b5a38;margin:20px 0 10px;font-weight:400}
+.cert .who{font-family:var(--f-display);font-size:35px;line-height:1.15;color:#1a1408;margin:0 0 6px}
+.cert .crs{font-size:17px;color:#4a3f27;margin:14px 0 0;font-family:var(--f-display);font-weight:600}
+.cert hr{border:0;border-top:1px solid #ddd0b2;margin:22px auto;width:180px}
+.cert .foot{display:flex;justify-content:space-between;gap:16px;font-size:11.5px;color:#6b5a38;margin-top:24px;flex-wrap:wrap;text-align:left}
+.cert .sealbig{width:62px;height:62px;border-radius:50%;border:2px solid #b8933f;color:#8d6320;display:grid;place-items:center;margin:0 auto;font-family:var(--f-display);font-size:11px;letter-spacing:.06em;font-weight:700}
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+/* ---------- community / kb ---------- */
+.two{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px;cursor:pointer}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.post{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;display:flex;gap:12px}
+.post .av{width:34px;height:34px;border-radius:50%;background:var(--brass-soft);color:var(--brass-ink);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.post h3{font-size:15.5px;margin-bottom:3px}
+.post .meta{font-size:12px;color:var(--text-3);margin-bottom:7px}
+.post p{margin:0;font-size:14px;color:var(--text-2)}
+.post .acts{display:flex;gap:14px;margin-top:10px;font-size:13px;color:var(--text-3)}
+.post .acts button{background:none;border:0;cursor:pointer;color:inherit;display:flex;gap:5px;align-items:center;padding:0}
+.post .acts button:hover{color:var(--brass-ink)}
+.reply{margin-left:46px;border-left:2px solid var(--line);padding:9px 0 9px 14px;font-size:13.5px;color:var(--text-2)}
+.kb-art{padding:13px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);cursor:pointer}
+.kb-art:hover{border-color:var(--brass)}
+.kb-art h3{font-size:15px;margin-bottom:3px}
+/* ---------- settings / builder ---------- */
+.flag{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line-soft)}
+.flag:first-child{border-top:0}
+.flag .t{flex:1;min-width:0}
+.flag b{font-size:14.5px;font-weight:600;display:block}
+.flag small{color:var(--text-2);font-size:12.5px}
+.sw{width:42px;height:24px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);position:relative;cursor:pointer;flex:none;transition:background .15s}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.sw.on{background:var(--pass);border-color:var(--pass)}
+.sw.on::after{transform:translateX(18px)}
+.modebar{display:flex;gap:8px;background:var(--surface-2);padding:4px;border-radius:999px;width:fit-content}
+.modebar button{border:0;background:none;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text-2)}
+.modebar button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.bmod{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:12px;overflow:hidden}
+.bmod .mh{padding:11px 14px;background:var(--surface-2);display:flex;gap:10px;align-items:center;font-weight:600;font-size:14px}
+.bles{display:flex;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line-soft);font-size:14px}
+.bles .drag{cursor:grab;color:var(--text-3);font-size:14px;letter-spacing:-2px}
+.bles.dragover{background:var(--brass-soft)}
+.bles .sp{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ann{border-left:3px solid var(--brass);background:var(--brass-soft);padding:12px 15px;border-radius:0 var(--r-sm) var(--r-sm) 0}
+.ann b{font-size:14.5px}
+.ann p{margin:3px 0 0;font-size:13.5px;color:var(--text-2)}
+.srch-group{margin-bottom:22px}
+.srch-group h3{font-size:14px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.ai-note{font-size:12px;color:var(--text-2);background:var(--surface-2);border-radius:var(--r-sm);padding:10px 12px;line-height:1.5}
+</style>
+<div id="auth">
+  <div class="auth-card">
+    <div class="auth-top">
+      <div class="seal">VA</div>
+      <h1>VA Real Estate Academy</h1>
+      <p>Standardized training for our virtual assistant team</p>
+    </div>
+    <div class="auth-body">
+      <div class="eyebrow">Sign in as</div>
+      <div class="who" id="whoList"></div>
+      <div class="ai-note">Prototype sign-in. In the live build this is real email + password with Supabase Auth and row-level security, so each VA sees only their own training record.</div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="mk">VA</div>
+      <div><b>Real Estate Academy</b><span id="brandRole">Student</span></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="av" id="footAv">S</div>
+      <div><b id="footName">—</b><small id="footRole">—</small></div>
+      <button class="out" id="signout">Sign out</button>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="globalSearch" type="search" placeholder="Search courses, lessons, knowledge base…" aria-label="Search">
+      </div>
+      <div class="sp"></div>
+      <button class="icobtn" id="bellBtn" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg><span class="dot" id="bellDot"></span></button>
+      <span id="saveDot" class="pill flat" title="Where your changes are stored" style="margin-right:2px">…</span>
+      <button class="icobtn hidden" id="themeBtn" aria-label="Toggle theme" title="Light / dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+    </header>
+    <div id="storeWarn" style="display:none;align-items:center;gap:12px;flex-wrap:wrap;background:var(--warn-soft);color:var(--warn);padding:11px 24px;border-bottom:1px solid var(--line);font-size:13.5px">
+      <b>Changes are NOT being saved.</b>
+      <span style="color:var(--text-2)">Courses you add will disappear on refresh. Export a backup, or open the published version instead of the local file.</span>
+      <button class="btn sm" id="warnEnable">Turn on saving</button><button class="btn sm" id="warnExport">Export backup</button>
+    </div>
+    <div class="wrap" id="view"></div>
+  </div>
+</div>
+<div id="modalHost"></div>
+<script>
+/* ============ SEED DATA (DEMO CONTENT — replaceable from Admin) ============ */
+const uid = (p) => p + "_" + Math.random().toString(36).slice(2, 8);
+
+function L(title, min, desc, terms, notes, quiz) {
+  return { id: uid("les"), title, min, video: "https://vimeo.com/demo/" + title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    desc, terms: terms || [], notes: notes || [], resources: [], quiz: quiz || null, demo: true };
+}
+function Q(q, opts, answer, type) { return { id: uid("q"), q, opts, answer, type: type || "single" }; }
+
+const SEED_COURSES = [
+  { id: "c_fund", title: "Real Estate Fundamentals", category: "Foundation", demo: true,
+    desc: "The vocabulary, players, and paperwork every VA needs before touching a live file.",
+    prereq: null, passScore: 80, attempts: 3, completionRule: "video_and_quiz", discussion: true,
+    modules: [
+      { id: "m1", title: "How a Deal Works", lessons: [
+        L("Who Does What on a Transaction", 9, "Agent, broker, transaction coordinator, escrow officer, title officer, lender, appraiser, inspector — who owns which step and who a VA should contact for what.",
+          [["Listing agent","Represents the seller and controls the listing file."],["Broker","The licensed entity the agent hangs their license under. Final authority on compliance."],["Transaction coordinator","Keeps the file moving after contract acceptance; the VA's closest counterpart."]],
+          ["A VA never gives advice on price, value, or contract terms. Route those to the agent.","When you are unsure who to contact, contact the transaction coordinator first."]),
+        L("Listing to Closing: The Timeline", 11, "A single map of the deal from listing agreement through recording, with the dates a VA is responsible for tracking.",
+          [["Recording","When the county records the deed. The deal is legally closed at recording, not at signing."]],
+          ["Most dates in a purchase contract count from Acceptance Date, not from the date the contract was signed."]),
+        L("Reading a Purchase Agreement", 12, "Where to find the price, the parties, the deposit, the contingency periods, and the close-of-escrow date in a standard purchase agreement.",
+          [["Acceptance date","The date the last party signed and delivered. Every contingency clock starts here."],["Close of escrow","The contractual date the deal is set to record."]], []),
+      ]},
+      { id: "m2", title: "Working Inside the Team", lessons: [
+        L("Communication Rules for VAs", 8, "What a VA may send, what must be approved first, and how to log every client touch in the CRM.",
+          [["Approved template","Pre-written message the agent has already cleared. Send as-is unless told otherwise."]], []),
+        L("Confidentiality and File Security", 7, "Handling client documents, ID, and financial paperwork. What never leaves the system.", [], []),
+      ]},
+    ],
+    finalQuiz: { passScore: 80, attempts: 3, timeLimit: 0, randomize: true, questions: [
+      Q("A contingency period of 17 days is counted from which date?", ["The date the seller signed", "The acceptance date", "The close of escrow date", "The date escrow was opened"], 1),
+      Q("When is a residential deal legally closed?", ["When both parties sign", "When funds are wired", "When the county records the deed", "When keys are handed over"], 2),
+      Q("A buyer asks your opinion on whether the price is fair. What do you do?", ["Give your honest opinion", "Send recent comparable sales", "Route the question to the agent", "Tell them to ask the lender"], 2),
+      Q("Which of these may a VA send without approval?", ["A price reduction notice", "An approved appointment-confirmation template", "A counter offer", "A repair request"], 1),
+      Q("True or false: the transaction coordinator is usually the VA's first point of contact after acceptance.", ["True", "False"], 0, "tf"),
+    ]}
+  },
+];
+SEED_COURSES.push(
+  { id: "c_escrow", title: "Escrow Fundamentals", category: "Escrow", demo: true,
+    desc: "What escrow actually does, what a VA is responsible for, and how to keep a file from stalling.",
+    prereq: "c_fund", passScore: 80, attempts: 3, completionRule: "video_and_quiz", discussion: true,
+    modules: [
+      { id: "m1", title: "Understanding Escrow", lessons: [
+        L("What Is Escrow?", 10, "A neutral third party holds the money and the documents until every condition in the contract is satisfied. This lesson covers why that exists and what escrow will and will not do for you.",
+          [["Escrow","A neutral third party that holds funds and documents until all contract conditions are met."],["Escrow officer","The person at the escrow company running the file. Not an attorney and cannot give legal advice."],["Escrow number","The file number assigned when escrow opens. Put it in the subject line of every email."]],
+          ["Escrow follows written instructions only. A phone call does not change escrow instructions.","Always reference the escrow number and property address together."]),
+        L("Opening Escrow", 9, "What escrow needs on day one, who sends it, and the two things that most often delay opening.",
+          [["Escrow instructions","The written agreement telling escrow exactly how to handle the file."],["Preliminary title report","Title's early report on ownership and anything recorded against the property."]],
+          ["The fully executed contract and the earnest money receipt are what actually open a file."]),
+        L("Earnest Money Deposit", 8, "How much, when it is due, how it is delivered, and what a VA tracks.",
+          [["Earnest money (EMD)","Buyer's good-faith deposit, held by escrow and credited at closing."],["Wire instructions","Never send, confirm, or re-send wire instructions. Wire fraud is the single biggest risk in this business."]],
+          ["If anyone emails you changed wire instructions, do not forward them. Escalate immediately."]),
+      ]},
+      { id: "m2", title: "Managing the Transaction", lessons: [
+        L("Inspections", 10, "The general inspection window, common specialty inspections, and how the VA tracks the response deadline.",
+          [["Inspection contingency","The window in which the buyer may investigate and cancel."],["Request for repairs","Buyer's written ask after inspections. Agent writes it; VA tracks the reply deadline."]], []),
+        L("The Appraisal", 9, "Who orders it, how long it takes, and what happens when it comes in low.",
+          [["Appraisal contingency","Protects the buyer if the appraised value comes in below the purchase price."],["Appraisal gap","The difference between contract price and appraised value."]],
+          ["A low appraisal is not automatically a cancellation. It opens a negotiation."]),
+        L("Loan and Underwriting", 11, "From pre-approval to clear-to-close, and the documents underwriting asks for again and again.",
+          [["Clear to close (CTC)","Underwriting has signed off. Docs can be drawn."],["Conditions","Items underwriting still needs before CTC."]], []),
+        L("Title and the Preliminary Report", 9, "Reading a prelim, spotting liens and easements, and who clears what.",
+          [["Lien","A recorded claim against the property that must usually be paid at closing."],["Easement","A recorded right for someone else to use part of the property."]], []),
+        L("Disclosures", 8, "The disclosure packet, delivery tracking, and why signed receipts matter.",
+          [["Disclosure packet","The set of seller disclosures delivered to the buyer."]], []),
+      ]},
+      { id: "m3", title: "Closing the File", lessons: [
+        L("Contingency Removal", 9, "Active vs passive removal, and the deadline calendar a VA maintains.",
+          [["Contingency removal","Written release of a buyer protection. Once removed, the deposit is generally at risk."]], []),
+        L("Signing and Funding", 10, "Notary signing, lender funding, and the gap between signing and recording.",
+          [["Funding","The lender wires loan proceeds to escrow."],["Recording","County records the deed. This is the actual close."]], []),
+        L("Closing Statement Basics", 9, "Reading the settlement statement well enough to answer a client's 'what is this line' question by routing it correctly.",
+          [["Settlement statement","Itemized accounting of every dollar in the transaction."],["Prorations","Splitting taxes, HOA and similar between buyer and seller by date."]], []),
+      ]},
+      { id: "m4", title: "When Things Go Wrong", lessons: [
+        L("Delays, Extensions, and Cancellations", 10, "The three outcomes when a date is missed, and what the VA prepares for each.",
+          [["Addendum","Written change to the contract, signed by both parties."],["Demand to close","Written notice requiring performance within a set number of days."]], []),
+      ]},
+    ],
+    finalQuiz: { passScore: 80, attempts: 3, timeLimit: 20, randomize: true, questions: [
+      Q("What is the primary role of escrow?", ["To represent the buyer","To hold funds and documents as a neutral third party","To approve the loan","To set the sale price"], 1),
+      Q("A client emails you new wire instructions the day before closing. What do you do?", ["Forward them to escrow","Confirm them by replying to the email","Do not act on them and escalate immediately","Send them to the lender"], 2),
+      Q("Earnest money is best described as:", ["A fee paid to the agent","The buyer's good-faith deposit held by escrow","The down payment","A charge for opening escrow"], 1),
+      Q("Which documents typically open an escrow file? (Select all that apply)", ["Fully executed purchase contract","Earnest money receipt","Final closing statement","Recorded deed"], [0,1], "multi"),
+      Q("An appraisal comes in $15,000 below the contract price. This is called:", ["A lien","An appraisal gap","A proration","A contingency removal"], 1),
+      Q("Clear to close means:", ["Escrow has closed","The county recorded the deed","Underwriting has signed off and docs can be drawn","The buyer removed all contingencies"], 2),
+      Q("A deal is legally closed when:", ["Buyer signs at the notary","The lender funds","The county records the deed","Escrow emails the closing statement"], 2),
+      Q("True or false: a phone call is enough to change written escrow instructions.", ["True","False"], 1, "tf"),
+      Q("The preliminary title report is used to:", ["Estimate the property value","Show ownership and anything recorded against the property","Calculate the buyer's loan amount","Schedule the inspection"], 1),
+      Q("Scenario: inspections closed yesterday and the buyer has not responded. The listing agent asks you what happens now. Your correct move is:", ["Tell them the buyer waived inspections","Pull the file, confirm the deadline and response status, and route the question to your agent","Email the buyer directly for an answer","Cancel the contingency in the system"], 1),
+    ]}
+  },
+  { id: "c_tc", title: "Transaction Coordination", category: "Operations", demo: true,
+    desc: "Running a file end to end: dates, documents, compliance, and the weekly update the agent expects.",
+    prereq: "c_escrow", passScore: 80, attempts: 3, completionRule: "video_and_quiz", discussion: true,
+    modules: [
+      { id: "m1", title: "Setting Up the File", lessons: [
+        L("Opening a New File", 9, "Folder structure, naming, and the intake checklist.", [["Intake checklist","Standard list of what must be collected before a file is considered open."]], []),
+        L("Building the Date Calendar", 11, "Turning contract dates into calendar entries and reminders.", [["Date calendar","Every contractual deadline, entered with a reminder two days ahead."]], []),
+        L("Document Compliance", 10, "Which signatures and initials brokers audit for.", [], []),
+      ]},
+      { id: "m2", title: "Running the File", lessons: [
+        L("The Weekly Update", 8, "Format, timing, and what the agent actually reads.", [], []),
+        L("Chasing Signatures", 9, "Polite, escalating follow-up that gets documents back.", [], []),
+        L("Closing Out and Archiving", 8, "Final compliance pass and archive standards.", [], []),
+      ]},
+    ],
+    finalQuiz: { passScore: 80, attempts: 3, timeLimit: 0, randomize: true, questions: [
+      Q("Reminders for contractual deadlines should be set:", ["On the deadline","Two days ahead","One week ahead","Only for closing"], 1),
+      Q("The weekly update is primarily for:", ["The lender","The buyer","Your agent","The county"], 2),
+      Q("Broker compliance audits most often flag:", ["Missing initials and signatures","Spelling errors","Email tone","Photo quality"], 0),
+      Q("True or false: a file is archived before the final compliance pass.", ["True","False"], 1, "tf"),
+    ]}
+  },
+  { id: "c_crm", title: "CRM Training", category: "Systems", demo: true,
+    desc: "Data hygiene, tagging, pipelines, and the follow-up sequences we run.",
+    prereq: null, passScore: 80, attempts: 3, completionRule: "video_and_quiz", discussion: false,
+    modules: [
+      { id: "m1", title: "CRM Basics", lessons: [
+        L("Contact Records and Data Hygiene", 9, "One person, one record. How we de-duplicate and what fields are required.", [["Duplicate merge","Combining two records for the same person without losing history."]], []),
+        L("Tags, Stages, and Pipelines", 10, "How a lead moves from new to under contract.", [["Pipeline stage","Where a contact sits in the process. Drives automation."]], []),
+        L("Logging Every Touch", 8, "Calls, texts, emails — what gets logged and how.", [], []),
+      ]},
+      { id: "m2", title: "Automation", lessons: [
+        L("Running Follow-Up Sequences", 9, "Enrolling contacts, pausing, and when to stop a sequence.", [], []),
+        L("Reporting From the CRM", 8, "Pulling the numbers the agent asks for on Mondays.", [], []),
+      ]},
+    ],
+    finalQuiz: { passScore: 80, attempts: 3, timeLimit: 0, randomize: true, questions: [
+      Q("A contact replies to a sequence email. You should:", ["Let the sequence continue","Pause the sequence and notify the agent","Delete the contact","Start a second sequence"], 1),
+      Q("Two records exist for the same person. Correct action:", ["Delete the older one","Merge them","Leave both","Rename one"], 1),
+      Q("Which must be logged?", ["Calls only","Emails only","Calls, texts, and emails","Nothing, the CRM does it"], 2),
+    ]}
+  },
+  { id: "c_appt", title: "Appointment Setting", category: "Operations", demo: true,
+    desc: "Scripts, objection handling, calendar rules, and confirmation cadence.",
+    prereq: "c_crm", passScore: 80, attempts: 3, completionRule: "video_and_quiz", discussion: true,
+    modules: [
+      { id: "m1", title: "The Call", lessons: [
+        L("Opening Script and Tone", 8, "The first fifteen seconds and why we never sound like a call center.", [], []),
+        L("Common Objections", 10, "Four objections you will hear every week and the approved responses.", [["Approved response","Language the agent has cleared. Do not improvise on price or value."]], []),
+      ]},
+      { id: "m2", title: "The Calendar", lessons: [
+        L("Booking Rules and Buffers", 8, "Drive time, buffers, and blackout hours.", [], []),
+        L("Confirmation Cadence", 7, "The 24-hour and 2-hour confirmations that cut no-shows.", [], []),
+      ]},
+    ],
+    finalQuiz: { passScore: 80, attempts: 3, timeLimit: 0, randomize: true, questions: [
+      Q("A prospect asks what their home is worth. You should:", ["Give a range from the CRM","Use the approved response and book the agent","Send public estimate sites","Decline to answer and hang up"], 1),
+      Q("Confirmations are sent at:", ["24 hours and 2 hours before","Only the morning of","One week before","Only if the client asks"], 0),
+      Q("Buffers between appointments exist to cover:", ["Lunch","Drive time","Paperwork","CRM updates"], 1),
+    ]}
+  }
+);
+const SEED_USERS = [
+  { id: "u_admin", name: "Akoni", role: "admin", title: "Academy Administrator", joined: "2026-01-12", email: "info.thebuild@gmail.com", phone: "", status: "active" },
+  { id: "u_sarah", name: "Sarah Nunez", role: "student", title: "Transaction VA", joined: "2026-02-03", email: "sarah.nunez@example.com", phone: "+63 917 555 0142", status: "active" },
+  { id: "u_john", name: "John Reyes", role: "student", title: "CRM & Admin VA", joined: "2026-02-03", email: "john.reyes@example.com", phone: "+63 917 555 0188", status: "active" },
+  { id: "u_mila", name: "Mila Cruz", role: "student", title: "Appointment Setter", joined: "2026-05-19", email: "mila.cruz@example.com", phone: "+63 915 555 0231", status: "active" },
+  { id: "u_dave", name: "Dave Okafor", role: "student", title: "Listing Support VA", joined: "2026-07-01", email: "dave.okafor@example.com", phone: "+63 918 555 0377", status: "active" },
+  { id: "u_grace", name: "Grace Tan", role: "student", title: "Transaction VA", joined: "2026-08-25", email: "grace.tan@example.com", phone: "+63 917 555 0410", status: "invited", tempPass: "Escrow-Lark-4821", inviteSentAt: "2026-08-25" },
+];
+
+const SEED_KB = [
+  { id: "kb1", cat: "Escrow", title: "Escrow Timeline Cheat Sheet", body: "Day 0 acceptance. Day 1-3 open escrow, deliver EMD, order prelim. Day 3-5 disclosures delivered. Day 7-12 inspections. Day 10-17 appraisal. Day 17 contingency removal on a standard 17-day contract. Day 21-28 loan docs and signing. Day 30 funding and recording.\n\nEvery one of these dates counts from the acceptance date unless the contract says otherwise. When a date lands on a weekend or holiday, check the contract for how it rolls." },
+  { id: "kb2", cat: "Escrow", title: "Wire Fraud: Our Standing Rule", body: "We never send, forward, confirm, or re-type wire instructions. Not once, not for a client we know, not when it looks urgent.\n\nIf you receive wire instructions or a change to them by email, do not reply, do not forward. Flag it to the agent and to escrow by phone using a number you already have on file." },
+  { id: "kb3", cat: "Escrow", title: "What a Preliminary Title Report Tells You", body: "The prelim shows the current vested owner, the legal description, and every recorded item against the property: loans, liens, easements, CC&Rs, and any judgments.\n\nA VA's job is to confirm the prelim arrived, save it to the file, and flag anything unexpected to the agent. We do not interpret title exceptions." },
+  { id: "kb4", cat: "Real Estate Terms", title: "Glossary: The Forty Terms You Need", body: "Acceptance date, addendum, appraisal, appraisal gap, broker, CC&Rs, clear to close, close of escrow, contingency, contingency removal, counter offer, deed, disclosure packet, earnest money, easement, escrow, escrow instructions, funding, lien, listing agreement, loan conditions, preliminary title report, proration, recording, request for repairs, settlement statement, title, underwriting.\n\nIf you cannot define it out loud, look it up before you use it with a client." },
+  { id: "kb5", cat: "CRM", title: "Required Fields on Every Contact", body: "Full name, primary phone, email, source, stage, owner, and last-touch date. A record without a source and a stage does not appear in reporting and effectively does not exist." },
+  { id: "kb6", cat: "Appointments", title: "Approved Confirmation Templates", body: "24-hour confirmation and 2-hour confirmation templates, plus the reschedule template. Send as written. Do not add pricing, availability promises, or opinions about the property." },
+  { id: "kb7", cat: "Transactions", title: "Weekly Update Format", body: "Subject: [Property Address] — Weekly Update [Date]\n\nOne line on status. Then: completed this week, due next week, items waiting on someone else, and anything at risk. Four bullets maximum per section. Send Monday before 9am agent local time." },
+  { id: "kb8", cat: "Escrow", title: "Who to Contact for What", body: "Dates and deadlines: transaction coordinator. Money in or out: escrow officer. Loan status and conditions: loan officer's assistant. Title exceptions: title officer. Anything about price, value, repairs, or strategy: your agent, always." },
+];
+
+const SEED_POSTS = [
+  { id: "p1", cat: "Escrow", author: "u_sarah", title: "Prelim came back with an old lien — what's the VA's part?", body: "Prelim on the Maple Street file shows a mechanic's lien from 2019. I saved it to the file and flagged the agent. Is there anything else I should be doing or is that the whole job?", when: "2026-09-11T16:20:00", likes: 4,
+    replies: [ { author: "u_admin", body: "That's exactly right. Save it, flag it, note the date you flagged it. Clearing the lien is escrow and title's job, not ours.", when: "2026-09-11T17:02:00" },
+               { author: "u_john", body: "Adding: put the flag in the CRM activity log too so it shows on the weekly update.", when: "2026-09-11T18:40:00" } ] },
+  { id: "p2", cat: "Appointments", author: "u_mila", title: "Objection I keep getting: \"just send me the price\"", body: "Three times this week. I've been using the approved response but they push back. Any wording that works better without going off script?", when: "2026-09-10T09:05:00", likes: 6,
+    replies: [ { author: "u_admin", body: "Stay on script. Offer the agent's 15-minute call as the way to get a real number. If they still refuse, log it and move on — that's a lead the agent will work later.", when: "2026-09-10T11:15:00" } ] },
+  { id: "p3", cat: "General", author: "u_john", title: "Escrow Fundamentals module 3 — worth taking notes on", body: "Signing vs funding vs recording finally clicked for me in lesson 9. If you're rushing through, slow down on that one.", when: "2026-09-08T14:30:00", likes: 9, replies: [] },
+  { id: "p4", cat: "Tips & Tricks", author: "u_sarah", title: "My date-calendar setup", body: "I build every contract date as a calendar event with a 2-day-ahead reminder, and I title them [Address] — [Deadline]. Makes the weekly update take about ten minutes instead of an hour.", when: "2026-09-05T08:12:00", likes: 12,
+    replies: [ { author: "u_grace", body: "Stealing this, thank you.", when: "2026-09-05T10:00:00" } ] },
+  { id: "p5", cat: "CRM", author: "u_grace", title: "Duplicate contacts from two lead sources", body: "Same person came in from two portals with different emails. Merging loses one of the emails — is that okay or should I keep both records?", when: "2026-09-03T12:44:00", likes: 2,
+    replies: [ { author: "u_john", body: "Merge, then add the second email as a secondary email field. Never keep two records.", when: "2026-09-03T13:10:00" } ] },
+];
+
+const SEED_ANN = [
+  { id: "a1", title: "Escrow Fundamentals is now required", body: "Every transaction VA must complete and pass Escrow Fundamentals before being assigned a live file. Certificates are tracked.", when: "2026-09-09", pin: true },
+  { id: "a2", title: "New lesson added: Wire Fraud Standing Rule", body: "Added to Escrow Fundamentals, Module 1. Short, but it is the most important seven minutes in this school.", when: "2026-09-02", pin: false },
+  { id: "a3", title: "Monday training — 8:00am PT", body: "Live walkthrough of the weekly update format. Recording will be posted to the knowledge base.", when: "2026-08-28", pin: false },
+];
+
+const DEFAULT_FLAGS = {
+  community_enabled: true, research_enabled: true, knowledge_base_enabled: true,
+  ai_enabled: false, badges_enabled: false, gamification_enabled: false,
+  advanced_reporting_enabled: false, course_discussions_enabled: true,
+  live_classes_enabled: false, instructor_accounts_enabled: false,
+  prerequisites_enabled: true, notifications_enabled: true,
+};
+const FLAG_META = {
+  community_enabled: ["VA Community", "Private discussion board for the team"],
+  research_enabled: ["Research Center", "Lets VAs search outside sources, kept separate from approved material"],
+  knowledge_base_enabled: ["Knowledge Base", "Administrator-approved reference articles"],
+  ai_enabled: ["AI Training Assistant", "Answers training questions from approved material. Off by default"],
+  badges_enabled: ["Badges", "Earned marks on the student profile"],
+  gamification_enabled: ["Gamification", "Streaks, points, and leaderboards"],
+  advanced_reporting_enabled: ["Advanced Reporting", "Completion rates, score averages, inactivity"],
+  course_discussions_enabled: ["Course Discussions", "A discussion tab inside each course"],
+  live_classes_enabled: ["Live Classes", "Scheduled sessions and attendance"],
+  instructor_accounts_enabled: ["Instructor Accounts", "A third role between admin and student"],
+  prerequisites_enabled: ["Course Prerequisites", "Lock a course until the one before it is passed"],
+  notifications_enabled: ["Notifications", "In-app alerts for results, replies, and announcements"],
+};
+const SIMPLE_OFF = ["ai_enabled","badges_enabled","gamification_enabled","advanced_reporting_enabled","live_classes_enabled","instructor_accounts_enabled"];
+</script>
+<script>
+/* ============ STATE ============ */
+const LSK = "va_academy_v1";
+let S = null, me = null, route = { page: "dash" }, sideOpen = false;
+
+function freshState() {
+  return { courses: JSON.parse(JSON.stringify(SEED_COURSES)), users: JSON.parse(JSON.stringify(SEED_USERS)),
+    kb: JSON.parse(JSON.stringify(SEED_KB)), posts: JSON.parse(JSON.stringify(SEED_POSTS)),
+    ann: JSON.parse(JSON.stringify(SEED_ANN)), flags: Object.assign({}, DEFAULT_FLAGS),
+    mode: "simple", schoolName: "VA Real Estate Academy", signer: "Akoni — Academy Administrator",
+    progress: {}, attempts: {}, certs: {}, saved: {}, notifs: [], lastSeenNotif: 0 };
+}
+function allLessons(c) { return c.modules.flatMap(m => m.lessons); }
+function courseById(id) { return S.courses.find(c => c.id === id); }
+function lessonById(id) { for (const c of S.courses) for (const m of c.modules) { const l = m.lessons.find(x => x.id === id); if (l) return { course: c, module: m, lesson: l }; } return null; }
+function userById(id) { return S.users.find(u => u.id === id); }
+function initials(n) { return n.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase(); }
+
+function seedProgress() {
+  const mark = (uid2, cid, count) => {
+    const c = courseById(cid); if (!c) return;
+    S.progress[uid2] = S.progress[uid2] || {};
+    allLessons(c).slice(0, count).forEach(l => S.progress[uid2][l.id] = { watched: 100, done: true });
+  };
+  const pass = (uid2, cid, score, date) => {
+    S.attempts[uid2] = S.attempts[uid2] || [];
+    S.attempts[uid2].push({ courseId: cid, score, passed: true, when: date });
+    S.certs[uid2] = S.certs[uid2] || [];
+    S.certs[uid2].push({ courseId: cid, number: "VAA-" + date.slice(2, 4) + date.slice(5, 7) + "-" + Math.floor(1000 + Math.random() * 8999), date });
+  };
+  const fullCount = (cid) => allLessons(courseById(cid)).length;
+  mark("u_sarah", "c_fund", fullCount("c_fund")); pass("u_sarah", "c_fund", 92, "2026-03-04");
+  mark("u_sarah", "c_escrow", 8);
+  mark("u_john", "c_fund", fullCount("c_fund")); pass("u_john", "c_fund", 88, "2026-03-06");
+  mark("u_john", "c_crm", fullCount("c_crm")); pass("u_john", "c_crm", 96, "2026-04-18");
+  mark("u_john", "c_escrow", 12); pass("u_john", "c_escrow", 84, "2026-06-02");
+  mark("u_mila", "c_fund", 3);
+  mark("u_mila", "c_appt", 2);
+  mark("u_dave", "c_fund", fullCount("c_fund")); pass("u_dave", "c_fund", 80, "2026-07-22");
+  mark("u_dave", "c_escrow", 2);
+  S.lastActive = { u_sarah: "2026-09-14", u_john: "2026-09-13", u_mila: "2026-09-12", u_dave: "2026-08-30", u_grace: "2026-09-01" };
+  S.notifs = [
+    { id: "n1", text: "New announcement: Escrow Fundamentals is now required", when: "2026-09-09", to: "all" },
+    { id: "n2", text: "Sarah Nunez replied in VA Community", when: "2026-09-11", to: "all" },
+  ];
+}
+function save() { dirtySinceBoot = true; try { localStorage.setItem(LSK, JSON.stringify(S)); saveFailed = false; } catch (e) { saveFailed = !DB; } dbQueue(); }
+function load() {
+  try { const raw = localStorage.getItem(LSK); if (raw) { S = JSON.parse(raw); return true; } } catch (e) {}
+  return false;
+}
+function resetAll() { try { localStorage.removeItem(LSK); } catch (e) {} S = freshState(); seedProgress(); save(); }
+let storageOK = false, saveFailed = false;
+/* ---- durable storage via the artifact database (survives refresh, device, browser) ---- */
+let DB = null, dbReady = false, dbTimer = null, dbBusy = false, dirtySinceBoot = false;
+function paintSaveDot() {
+  const el = document.getElementById("saveDot"); if (!el) return;
+  if (DB && dbReady) { el.className = "pill " + (dbBusy ? "wait" : "ok"); el.textContent = dbBusy ? "Saving…" : "Saved"; el.title = "Stored in the school database"; }
+  else if (storageOK && !saveFailed) { el.className = "pill flat"; el.textContent = "This browser"; el.title = "Saved to this browser only"; }
+  else { el.className = "pill no"; el.textContent = "Not saving"; el.title = "This browser is blocking storage — export a backup"; }
+}
+const DB_DOCS = {
+  config:  () => ({ flags: S.flags, mode: S.mode, schoolName: S.schoolName, signer: S.signer }),
+  users:   () => ({ users: S.users }),
+  courses: () => ({ courses: S.courses }),
+  content: () => ({ kb: S.kb, posts: S.posts, ann: S.ann }),
+  records: () => ({ progress: S.progress, attempts: S.attempts, certs: S.certs, lastActive: S.lastActive || {}, notifs: S.notifs }),
+};
+const dbHash = {};
+async function dbFlush() {
+  if (!DB || !dbReady) return;
+  dbBusy = true; paintSaveDot();
+  for (const k of Object.keys(DB_DOCS)) {
+    let body; try { body = DB_DOCS[k](); } catch (e) { continue; }
+    const j = JSON.stringify(body);
+    if (dbHash[k] === j) continue;
+    let ok = false;
+    for (let t = 0; t < 2 && !ok; t++) {
+      try { await DB.doc("school/" + k).set(body); dbHash[k] = j; ok = true; }
+      catch (e) { if (t) { saveFailed = true; } else { await new Promise(r => setTimeout(r, 400)); } }
+    }
+  }
+  dbBusy = false; paintSaveDot();
+}
+function dbQueue() { if (!DB || !dbReady) return; clearTimeout(dbTimer); dbBusy = true; paintSaveDot(); dbTimer = setTimeout(dbFlush, 200); }
+function applyRemote(raw) {
+  let m; try { m = JSON.parse(JSON.stringify(raw)); } catch (e) { m = raw; }
+  if (m.flags) S.flags = Object.assign({}, DEFAULT_FLAGS, m.flags);
+  ["mode", "schoolName", "signer", "users", "courses", "kb", "posts", "ann", "progress", "attempts", "certs", "lastActive", "notifs"]
+    .forEach(k => { if (m[k] !== undefined) S[k] = m[k]; });
+}
+async function dbInit(askAgain) {
+  if (!(window.claude && claude.use)) { paintSaveDot(); return; }
+  try {
+    const perms = await claude.use("permissions");
+    if (perms) {
+      const st = await perms.state();
+      const cur = st && (st.db || (st.capabilities && st.capabilities.db));
+      if (askAgain || !cur || cur === "prompt" || cur === "unknown") { try { await perms.request(["db"]); } catch (e) {} }
+    }
+  } catch (e) {}
+  try { DB = await claude.use("db"); } catch (e) { DB = null; }
+  if (!DB) { paintSaveDot(); return; }
+  try {
+    const keys = Object.keys(DB_DOCS);
+    const snaps = await Promise.all(keys.map(k => DB.doc("school/" + k).get()));
+    if (snaps.some(x => x.exists) && !dirtySinceBoot) {
+      const merged = {};
+      snaps.forEach((x, i) => { if (x.exists) Object.assign(merged, x.data()); });
+      applyRemote(merged);
+      keys.forEach(k => { try { dbHash[k] = JSON.stringify(DB_DOCS[k]()); } catch (e) {} });
+      dbReady = true;
+      if (me) { const again = userById(me.id); if (again) me = again; else { me = null; } }
+    } else { dbReady = true; Object.keys(dbHash).forEach(k => delete dbHash[k]); await dbFlush(); }
+    storageOK = true; saveFailed = false;
+    renderAuth();
+    if (me) render(); else { const hh = readHash(); if (hh.u && userById(hh.u)) signIn(hh.u, hh.p, { id: hh.id, uid: hh.uid }); else paintSaveDot(); }
+  } catch (e) { DB = null; }
+}
+function probeStorage() {
+  try { localStorage.setItem("__probe", "1"); const v = localStorage.getItem("__probe"); localStorage.removeItem("__probe"); return v === "1"; }
+  catch (e) { return false; }
+}
+async function exportData() {
+  const json = JSON.stringify(S, null, 2);
+  const fname = "va-academy-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+  try {
+    const dl = window.claude && claude.use ? await claude.use("downloads") : null;
+    if (dl) { await dl.save({ filename: fname, data: json }); toast("Backup saved"); return; }
+  } catch (e) {}
+  try {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+    a.download = fname;
+    document.body.appendChild(a); a.click(); a.remove();
+    toast("Backup downloaded");
+  } catch (e) { toast("Download blocked — copy the text instead"); }
+  modal("School backup", '<div class="ai-note">Keep this file. Import it to restore every course, lesson, test and student record.</div>' +
+    '<textarea id="expBox" rows="10" class="mono" style="font-size:11.5px">' + esc(json) + '</textarea>',
+    '<button class="btn" id="expCopy">Copy</button><button class="btn pri" onclick="closeModal()">Done</button>');
+  const c = $("#expCopy"); if (c) c.onclick = () => { const t = $("#expBox"); t.select(); try { navigator.clipboard.writeText(t.value); toast("Copied"); } catch (e) { toast("Press Cmd+C to copy"); } };
+}
+function importData(text) {
+  try {
+    const obj = JSON.parse(text);
+    if (!obj || !Array.isArray(obj.courses)) { toast("That file is not a school backup."); return; }
+    S = obj; if (!S.flags) S.flags = Object.assign({}, DEFAULT_FLAGS);
+    save(); me = (me && userById(me.id)) || S.users[0];
+    toast("School restored"); go(me.role === "admin" ? "adash" : "dash");
+  } catch (e) { toast("Could not read that backup file."); }
+}
+
+/* ============ progress helpers ============ */
+function lessonDone(uid2, lid) { return !!(S.progress[uid2] && S.progress[uid2][lid] && S.progress[uid2][lid].done); }
+function watched(uid2, lid) { return (S.progress[uid2] && S.progress[uid2][lid] && S.progress[uid2][lid].watched) || 0; }
+function coursePct(uid2, c) { const ls = allLessons(c); if (!ls.length) return 0; return Math.round(ls.filter(l => lessonDone(uid2, l.id)).length / ls.length * 100); }
+function courseDoneCount(uid2, c) { return allLessons(c).filter(l => lessonDone(uid2, l.id)).length; }
+function bestAttempt(uid2, cid) { const a = (S.attempts[uid2] || []).filter(x => x.courseId === cid); if (!a.length) return null; return a.reduce((b, x) => x.score > b.score ? x : b); }
+function certFor(uid2, cid) { return (S.certs[uid2] || []).find(c => c.courseId === cid) || null; }
+function coursePassed(uid2, cid) { return !!certFor(uid2, cid); }
+function courseLocked(uid2, c) { if (!S.flags.prerequisites_enabled || !c.prereq) return false; return !coursePassed(uid2, c.prereq); }
+function overallPct(uid2) {
+  const cs = S.courses.filter(c => !courseLocked(uid2, c));
+  const tot = cs.reduce((n, c) => n + allLessons(c).length, 0);
+  if (!tot) return 0;
+  const d = cs.reduce((n, c) => n + courseDoneCount(uid2, c), 0);
+  return Math.round(d / tot * 100);
+}
+function nextLesson(uid2) {
+  for (const c of S.courses) {
+    if (courseLocked(uid2, c)) continue;
+    for (const m of c.modules) for (const l of m.lessons) if (!lessonDone(uid2, l.id)) return { course: c, module: m, lesson: l, idx: allLessons(c).indexOf(l) + 1, total: allLessons(c).length };
+  }
+  return null;
+}
+
+/* ============ ui utils ============ */
+const $ = (s, r) => (r || document).querySelector(s);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+function toast(msg) { const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); }
+function go(page, params) { route = Object.assign({ page }, params || {}); sideOpen = false; render(); window.scrollTo({ top: 0 }); }
+function syncHash() {
+  try {
+    if (!me) { history.replaceState(null, "", location.pathname + location.search); return; }
+    let h = "#u=" + me.id + "&p=" + route.page;
+    if (route.id) h += "&id=" + encodeURIComponent(route.id);
+    if (route.uid) h += "&uid=" + encodeURIComponent(route.uid);
+    history.replaceState(null, "", h);
+  } catch (e) {}
+}
+function readHash() {
+  const out = {};
+  (location.hash || "").replace(/^#/, "").split("&").forEach(kv => {
+    const i = kv.indexOf("="); if (i > 0) out[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1));
+  });
+  return out;
+}
+function fmtDate(d) { if (!d) return "—"; const x = new Date(d); return x.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); }
+function ago(d) { const s = (Date.now() - new Date(d)) / 1000; if (s < 3600) return Math.max(1, Math.round(s / 60)) + "m ago"; if (s < 86400) return Math.round(s / 3600) + "h ago"; const dd = Math.round(s / 86400); return dd < 30 ? dd + "d ago" : fmtDate(d); }
+function ring(pct, size) {
+  const r = 34, c = 2 * Math.PI * r, off = c * (1 - pct / 100), s = size || 84;
+  return '<svg class="ring" viewBox="0 0 80 80" width="' + s + '" height="' + s + '" aria-label="' + pct + ' percent complete">' +
+    '<circle cx="40" cy="40" r="' + r + '" fill="none" stroke="var(--surface-2)" stroke-width="7"/>' +
+    '<circle cx="40" cy="40" r="' + r + '" fill="none" stroke="#d9a441" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 40 40)"/>' +
+    '<text x="40" y="45" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="17" fill="currentColor">' + pct + '%</text></svg>';
+}
+function bar(pct, green) { return '<div class="bar' + (green ? " g" : "") + '"><i style="width:' + pct + '%"></i></div>'; }
+function modal(title, bodyHTML, footHTML) {
+  $("#modalHost").innerHTML = '<div class="modal-bg" id="mbg"><div class="modal" role="dialog" aria-modal="true"><header><h3>' + esc(title) + '</h3><button class="x" id="mx" aria-label="Close">&times;</button></header><div class="body">' + bodyHTML + '</div>' + (footHTML ? '<footer>' + footHTML + '</footer>' : '') + '</div></div>';
+  $("#mx").onclick = closeModal;
+  $("#mbg").onclick = (e) => { if (e.target.id === "mbg") closeModal(); };
+}
+function closeModal() { $("#modalHost").innerHTML = ""; }
+const ICON = {
+  dash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H20v3H6.5"/></svg>',
+  cert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 22l5-2.5L17 22l-1.5-8.5"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.3A8 8 0 1121 12z"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>',
+  users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3.5 3.5 0 010 6"/><path d="M18 20a6.4 6.4 0 00-2-4.6"/></svg>',
+  kb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2.5l1.4 2.6 2.9-.5.6 2.9 2.6 1.4-1.6 2.5 1.6 2.5-2.6 1.4-.6 2.9-2.9-.5L12 21.5l-1.4-2.6-2.9.5-.6-2.9L4.5 15l1.6-2.5L4.5 10l2.6-1.4.6-2.9 2.9.5z"/></svg>',
+  ai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12v2M15 12v2"/></svg>',
+  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+};
+</script>
+<script>
+/* ============ NAV ============ */
+function navItems() {
+  const F = S.flags;
+  if (me.role === "admin") return [
+    { sec: "Administration" },
+    { k: "adash", t: "Dashboard", i: "dash" },
+    { k: "students", t: "Students", i: "users" },
+    { k: "acourses", t: "Courses", i: "book" },
+    F.community_enabled ? { k: "acommunity", t: "Community", i: "chat" } : null,
+    F.knowledge_base_enabled ? { k: "akb", t: "Knowledge Base", i: "kb" } : null,
+    { k: "acerts", t: "Certificates", i: "cert" },
+    F.advanced_reporting_enabled ? { k: "reports", t: "Reporting", i: "chart" } : null,
+    { k: "settings", t: "Settings", i: "gear" },
+    { sec: "Student view" },
+    { k: "dash", t: "Preview as student", i: "user" },
+  ].filter(Boolean);
+  return [
+    { k: "dash", t: "Dashboard", i: "dash" },
+    { k: "courses", t: "My Courses", i: "book" },
+    { k: "certs", t: "Certificates", i: "cert" },
+    F.community_enabled ? { k: "community", t: "Community", i: "chat" } : null,
+    (F.research_enabled || F.knowledge_base_enabled) ? { k: "research", t: "Research", i: "search" } : null,
+    F.ai_enabled ? { k: "assistant", t: "Training Assistant", i: "ai" } : null,
+    { k: "profile", t: "Profile", i: "user" },
+  ].filter(Boolean);
+}
+function renderNav() {
+  const active = { lesson: "courses", course: "courses", quiz: "courses", cert: "certs", student: "students", builder: "acourses", search: "dash", post: "community" }[route.page] || route.page;
+  $("#nav").innerHTML = navItems().map(n => n.sec
+    ? '<div class="sec">' + esc(n.sec) + '</div>'
+    : '<a tabindex="0" role="button" class="' + (active === n.k ? "active" : "") + '" data-go="' + n.k + '">' + ICON[n.i] + '<span>' + esc(n.t) + '</span></a>').join("");
+  $("#nav").querySelectorAll("[data-go]").forEach(a => {
+    a.onclick = () => go(a.dataset.go);
+    a.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(a.dataset.go); } };
+  });
+  $("#footAv").textContent = initials(me.name);
+  $("#footName").textContent = me.name;
+  $("#footRole").textContent = me.role === "admin" ? "Administrator" : me.title;
+  $("#brandRole").textContent = me.role === "admin" ? "Admin console" : "Student";
+  $("#bellDot").style.display = S.flags.notifications_enabled && S.notifs.length ? "block" : "none";
+  $("#bellBtn").style.display = S.flags.notifications_enabled ? "grid" : "none";
+  $("#side").classList.toggle("open", sideOpen);
+}
+function render() {
+  renderNav();
+  syncHash();
+  const v = $("#view");
+  const warn = $("#storeWarn");
+  if (warn) warn.style.display = ((DB && dbReady) || (storageOK && !saveFailed)) ? "none" : "flex";
+  paintSaveDot();
+  const P = {
+    dash: pageDash, courses: pageCourses, course: pageCourse, lesson: pageLesson, quiz: pageQuiz,
+    certs: pageCerts, cert: pageCert, community: pageCommunity, post: pagePost, research: pageResearch,
+    assistant: pageAssistant, profile: pageProfile, search: pageSearch,
+    adash: pageAdminDash, students: pageStudents, student: pageStudent, acourses: pageAdminCourses,
+    builder: pageBuilder, acommunity: pageCommunity, akb: pageAdminKB, acerts: pageAdminCerts,
+    reports: pageReports, settings: pageSettings,
+  };
+  (P[route.page] || pageDash)(v);
+}
+
+/* ============ STUDENT: DASHBOARD ============ */
+function pageDash(v) {
+  const n = nextLesson(me.id), pct = overallPct(me.id);
+  const pinned = S.ann.filter(a => a.pin);
+  let h = '<div class="page-head"><div><h1>Welcome back, ' + esc(me.name.split(" ")[0]) + '</h1><p>' + (n ? "Pick up where you left off." : "All assigned training is complete.") + '</p></div></div>';
+  if (pinned.length) h += '<div class="grid" style="margin-bottom:18px">' + pinned.map(a => '<div class="ann"><b>' + esc(a.title) + '</b><p>' + esc(a.body) + '</p></div>').join("") + '</div>';
+  if (n) {
+    h += '<div class="continue"><div class="l"><div class="eyebrow">Continue training</div><h2>' + esc(n.course.title) + '</h2>' +
+      '<p>Lesson ' + n.idx + ' of ' + n.total + ' &middot; ' + esc(n.lesson.title) + '</p>' + bar(coursePct(me.id, n.course)) +
+      '<div style="margin-top:14px"><button class="btn brass" data-act="continue">Continue</button></div></div>' + ring(coursePct(me.id, n.course)) + '</div>';
+  } else {
+    h += '<div class="continue"><div class="l"><div class="eyebrow">Training status</div><h2>You are fully certified</h2><p>Nothing assigned is outstanding. New courses appear here as they are added.</p></div>' + ring(100) + '</div>';
+  }
+  h += '<div class="stats" style="margin-top:18px">' +
+    stat("Overall progress", pct + "%") +
+    stat("Courses passed", (S.certs[me.id] || []).length + " of " + S.courses.filter(c => !courseLocked(me.id, c)).length) +
+    stat("Lessons completed", S.courses.reduce((a, c) => a + courseDoneCount(me.id, c), 0)) +
+    stat("Best test score", (() => { const all = S.attempts[me.id] || []; return all.length ? Math.max.apply(null, all.map(a => a.score)) + "%" : "—"; })()) + '</div>';
+  h += '<h2 style="font-size:19px;margin:26px 0 12px">My Courses</h2>' + courseCards();
+  const certs = S.certs[me.id] || [];
+  if (certs.length) h += '<h2 style="font-size:19px;margin:26px 0 12px">My Certifications</h2><div class="certs">' + certs.map(certCard).join("") + '</div>';
+  if (S.flags.community_enabled) {
+    h += '<h2 style="font-size:19px;margin:26px 0 12px">VA Community</h2><div class="grid">' +
+      S.posts.slice(0, 2).map(p => postCard(p, true)).join("") +
+      '<div><button class="btn sm" data-act="allposts">See all discussion</button></div></div>';
+  }
+  v.innerHTML = h;
+  wire(v);
+}
+function stat(label, val) { return '<div class="stat"><div class="eyebrow">' + esc(label) + '</div><b class="mono">' + esc(val) + '</b></div>'; }
+function courseCards() {
+  return '<div class="courses">' + S.courses.map(c => {
+    const locked = courseLocked(me.id, c), pct = coursePct(me.id, c), done = courseDoneCount(me.id, c), tot = allLessons(c).length;
+    const passed = coursePassed(me.id, c);
+    return '<div class="ccard" data-course="' + c.id + '"><div class="thumb"><span>' + esc(c.category) + '</span></div><div class="b">' +
+      '<h3>' + esc(c.title) + '</h3>' +
+      '<div class="meta"><span>' + done + ' / ' + tot + ' lessons</span><span class="mono">' + pct + '%</span></div>' + bar(pct, passed) +
+      '<div class="row" style="margin-top:auto;gap:6px">' +
+      (locked ? '<span class="pill flat">Locked &middot; needs ' + esc(courseById(c.prereq).title) + '</span>'
+        : passed ? '<span class="pill ok">Passed</span>' : pct > 0 ? '<span class="pill wait">In progress</span>' : '<span class="pill flat">Not started</span>') +
+      (c.demo ? '<span class="demo-tag">DEMO</span>' : '') + '</div></div></div>';
+  }).join("") + '</div>';
+}
+function certCard(c) {
+  const co = courseById(c.courseId); if (!co) return "";
+  return '<div class="card" style="display:flex;flex-direction:column;gap:8px"><div class="eyebrow">Certificate</div><h3 style="font-size:16px">' + esc(co.title) + '</h3>' +
+    '<div class="mono" style="font-size:12px;color:var(--text-2)">' + esc(c.number) + ' &middot; ' + fmtDate(c.date) + '</div>' +
+    '<button class="btn sm" data-cert="' + c.courseId + '" style="width:fit-content">View certificate</button></div>';
+}
+</script>
+<script>
+function requiredWatch(c) { return c.completionRule === "watch_full" ? 100 : c.completionRule === "manual" ? 0 : 80; }
+
+/* ============ STUDENT: COURSES ============ */
+function pageCourses(v) {
+  v.innerHTML = '<div class="page-head"><div><h1>My Courses</h1><p>Assigned training. Locked courses open when the course before them is passed.</p></div></div>' + courseCards();
+  wire(v);
+}
+function pageCourse(v) {
+  const c = courseById(route.id); if (!c) return go("courses");
+  const locked = courseLocked(me.id, c), pct = coursePct(me.id, c), passed = coursePassed(me.id, c);
+  const best = bestAttempt(me.id, c.id), allDone = courseDoneCount(me.id, c) === allLessons(c).length;
+  let h = '<div class="page-head"><div><div class="eyebrow">' + esc(c.category) + (c.demo ? ' &middot; demo content' : '') + '</div><h1>' + esc(c.title) + '</h1><p>' + esc(c.desc) + '</p></div><div class="sp"></div>' +
+    '<div style="min-width:170px">' + bar(pct, passed) + '<div class="row" style="justify-content:space-between;font-size:12.5px;color:var(--text-2);margin-top:5px"><span>' + courseDoneCount(me.id, c) + ' / ' + allLessons(c).length + ' lessons</span><span class="mono">' + pct + '%</span></div></div></div>';
+  if (locked) {
+    h += '<div class="card"><h3 style="font-size:17px">Locked</h3><p class="muted" style="margin:6px 0 0">Pass <b>' + esc(courseById(c.prereq).title) + '</b> first. Your administrator can turn prerequisites off in School Settings.</p></div>';
+    v.innerHTML = h; wire(v); return;
+  }
+  h += '<div class="grid">';
+  c.modules.forEach((m, mi) => {
+    h += '<div class="card" style="padding:0;overflow:hidden"><div style="padding:13px 17px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center">' +
+      '<span class="mono" style="font-size:12px;color:var(--text-3)">Module ' + (mi + 1) + '</span><b style="font-size:15px">' + esc(m.title) + '</b></div>';
+    m.lessons.forEach((l, li) => {
+      const d = lessonDone(me.id, l.id);
+      h += '<div class="bles" data-lesson="' + l.id + '" style="cursor:pointer">' +
+        '<span class="tick" style="flex:none;width:17px;height:17px;border-radius:50%;border:1.5px solid ' + (d ? "var(--pass)" : "var(--line)") + ';background:' + (d ? "var(--pass)" : "transparent") + ';display:grid;place-items:center;color:#fff;font-size:10px">' + (d ? "&#10003;" : "") + '</span>' +
+        '<span class="sp">' + esc(l.title) + '</span>' +
+        '<span class="mono" style="font-size:12px;color:var(--text-3)">' + l.min + ' min</span></div>';
+    });
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<div class="card" style="margin-top:18px"><div class="row"><div style="flex:1;min-width:200px"><div class="eyebrow">Course test</div>' +
+    '<h3 style="font-size:17px;margin-top:3px">' + c.finalQuiz.questions.length + ' questions &middot; ' + c.finalQuiz.passScore + '% to pass</h3>' +
+    '<p class="muted" style="margin:4px 0 0;font-size:13.5px">' + (c.finalQuiz.timeLimit ? c.finalQuiz.timeLimit + "-minute limit &middot; " : "No time limit &middot; ") + c.finalQuiz.attempts + ' attempts allowed' + (c.finalQuiz.randomize ? ' &middot; questions randomized' : '') + '</p></div>' +
+    '<div style="text-align:right">' + (best ? '<div class="pill ' + (best.passed ? "ok" : "no") + '" style="margin-bottom:8px">Best score ' + best.score + '%</div><br>' : '') +
+    '<button class="btn ' + (allDone ? "pri" : "") + '" data-act="quiz" data-id="' + c.id + '"' + (allDone ? "" : " disabled") + '>' + (passed ? "Retake test" : "Take the test") + '</button>' +
+    (allDone ? "" : '<div style="font-size:12.5px;color:var(--text-2);margin-top:6px">Finish every lesson to unlock</div>') + '</div></div></div>';
+  if (passed) {
+    h += '<div class="card" style="margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1"><div class="eyebrow">Certified</div><b>' + esc(certFor(me.id, c.id).number) + '</b></div><button class="btn brass" data-cert="' + c.id + '">View certificate</button></div>';
+  }
+  if (S.flags.course_discussions_enabled && c.discussion) {
+    const rel = S.posts.filter(p => p.cat === c.category).slice(0, 3);
+    h += '<h2 style="font-size:19px;margin:26px 0 12px">Course discussion</h2><div class="grid">' + (rel.length ? rel.map(p => postCard(p, true)).join("") : '<div class="card empty">No discussion on this course yet.</div>') + '</div>';
+  }
+  v.innerHTML = h; wire(v);
+}
+
+/* ============ STUDENT: LESSON ============ */
+let playTimer = null;
+function pageLesson(v) {
+  const f = lessonById(route.id); if (!f) return go("courses");
+  const { course: c, lesson: l } = f;
+  const ls = allLessons(c), i = ls.indexOf(l);
+  const w = watched(me.id, l.id), need = requiredWatch(c), done = lessonDone(me.id, l.id);
+  let rail = '<div class="rail"><div class="hd">' + esc(c.title) + '</div>';
+  c.modules.forEach((m, mi) => {
+    rail += '<div class="mod">Module ' + (mi + 1) + ' &middot; ' + esc(m.title) + '</div>';
+    m.lessons.forEach(x => {
+      rail += '<a class="' + (x.id === l.id ? "cur " : "") + (lessonDone(me.id, x.id) ? "done" : "") + '" data-lesson="' + x.id + '"><span class="tick">' + (lessonDone(me.id, x.id) ? "&#10003;" : "") + '</span><span>' + esc(x.title) + '</span></a>';
+    });
+  });
+  rail += '</div>';
+  let h = '<div class="row" style="margin-bottom:14px"><button class="btn sm" data-act="back" data-id="' + c.id + '">&larr; ' + esc(c.title) + '</button>' +
+    '<span class="mono" style="font-size:12.5px;color:var(--text-2)">Lesson ' + (i + 1) + ' of ' + ls.length + '</span>' + (done ? '<span class="pill ok">Completed</span>' : '') + '</div>';
+  h += '<div class="lesson-grid"><div>';
+  h += '<div class="video" id="videoBox">' + (w >= 100
+    ? '<div class="ph"><div style="font-size:13px">Video finished</div><div class="mono" style="font-size:11px;margin-top:6px;opacity:.7">' + esc(l.video) + '</div></div>'
+    : '<div class="ph"><button class="play" id="playBtn" aria-label="Play lesson video"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg></button><div style="font-size:13px">' + esc(l.title) + ' &middot; ' + l.min + ' min</div><div class="mono" style="font-size:11px;margin-top:6px;opacity:.7">' + esc(l.video) + '</div></div>') + '</div>';
+  h += '<div class="watchbar"><span class="mono" id="wPct">' + w + '% watched</span>' + bar(w) + '<span style="font-size:12.5px">' + (need ? "Needs " + need + "%" : "Manual completion") + '</span></div>';
+  h += '<div class="notes"><h2>' + esc(l.title) + '</h2><p>' + esc(l.desc) + '</p>';
+  if (l.notes && l.notes.length) h += '<div class="eyebrow" style="margin-top:16px">Lesson notes</div><ul style="margin:8px 0 0;padding-left:18px;color:var(--text-2);font-size:14px">' + l.notes.map(n => '<li style="margin-bottom:5px">' + esc(n) + '</li>').join("") + '</ul>';
+  if (l.terms && l.terms.length) h += '<div class="eyebrow" style="margin-top:18px">Important terminology</div><div class="terms">' + l.terms.map(t => '<div class="term"><b>' + esc(t[0]) + '</b><span class="muted">' + esc(t[1]) + '</span></div>').join("") + '</div>';
+  h += '<div class="eyebrow" style="margin-top:18px">Resources</div><div class="grid" style="margin-top:8px">' +
+    (l.resources && l.resources.length ? l.resources.map(r => '<div class="res">' + esc(r) + '</div>').join("")
+      : '<div class="res muted">No resources attached to this lesson yet. Admin adds PDFs, checklists and links here.</div>') + '</div>';
+  h += '<div class="row" style="margin-top:22px">' +
+    '<button class="btn pri" id="markBtn"' + (done ? " disabled" : "") + '>' + (done ? "Completed" : "Mark lesson complete") + '</button>' +
+    (i + 1 < ls.length ? '<button class="btn" data-lesson="' + ls[i + 1].id + '">Next lesson &rarr;</button>' : '<button class="btn" data-act="quiz" data-id="' + c.id + '">Go to course test &rarr;</button>') + '</div>';
+  h += '</div></div>' + rail + '</div>';
+  v.innerHTML = h; wire(v);
+  const pb = $("#playBtn");
+  if (pb) pb.onclick = () => startPlay(l.id, c);
+  const mb = $("#markBtn");
+  if (mb) mb.onclick = () => {
+    const cur = watched(me.id, l.id);
+    if (need && cur < need) { toast("Watch at least " + need + "% of the video first."); return; }
+    S.progress[me.id] = S.progress[me.id] || {};
+    S.progress[me.id][l.id] = { watched: Math.max(cur, need), done: true };
+    save(); toast("Lesson completed"); render();
+  };
+}
+function startPlay(lid, c) {
+  if (playTimer) clearInterval(playTimer);
+  S.progress[me.id] = S.progress[me.id] || {};
+  const cur = S.progress[me.id][lid] || { watched: 0, done: false };
+  S.progress[me.id][lid] = cur;
+  const box = $("#videoBox");
+  if (box) box.innerHTML = '<div class="ph"><div style="font-size:13px">Playing (demo playback)</div><div class="mono" style="font-size:11px;margin-top:6px;opacity:.7">Real build streams from the URL you paste</div></div>';
+  playTimer = setInterval(() => {
+    cur.watched = Math.min(100, cur.watched + 5);
+    const p = $("#wPct"), b = $(".watchbar .bar i");
+    if (p) p.textContent = cur.watched + "% watched";
+    if (b) b.style.width = cur.watched + "%";
+    const need = requiredWatch(c);
+    if (need && cur.watched >= need && !cur.done) { cur.done = true; save(); toast("Lesson marked complete"); }
+    if (cur.watched >= 100) { clearInterval(playTimer); playTimer = null; save(); render(); }
+  }, 180);
+}
+</script>
+<script>
+/* ============ QUIZ ============ */
+let QZ = null;
+function pageQuiz(v) {
+  const c = courseById(route.id); if (!c) return go("courses");
+  if (!QZ || QZ.courseId !== c.id) {
+    let qs = c.finalQuiz.questions.slice();
+    if (c.finalQuiz.randomize) qs = qs.sort(() => Math.random() - 0.5);
+    QZ = { courseId: c.id, qs, i: 0, answers: {}, done: false, started: Date.now() };
+  }
+  const prior = (S.attempts[me.id] || []).filter(a => a.courseId === c.id).length;
+  if (QZ.done) return quizResult(v, c);
+  if (prior >= c.finalQuiz.attempts && !coursePassed(me.id, c.id)) {
+    v.innerHTML = '<div class="quiz"><div class="qbox result"><h2>No attempts remaining</h2><p class="muted">You have used all ' + c.finalQuiz.attempts + ' attempts on ' + esc(c.title) + '. Your administrator can reset this from your student record.</p><button class="btn" data-act="back" data-id="' + c.id + '">Back to course</button></div></div>';
+    wire(v); return;
+  }
+  const q = QZ.qs[QZ.i], sel = QZ.answers[q.id];
+  const keys = "ABCDEFGH";
+  let h = '<div class="quiz"><div class="qhead"><span>' + esc(c.title) + ' &middot; Course test</span><span class="mono">Question ' + (QZ.i + 1) + ' of ' + QZ.qs.length + '</span></div>' + bar(Math.round(QZ.i / QZ.qs.length * 100));
+  h += '<div class="qbox" style="margin-top:14px"><h2>' + esc(q.q) + '</h2>';
+  if (q.type === "multi") h += '<div class="eyebrow" style="margin:-8px 0 12px">Select all that apply</div>';
+  q.opts.forEach((o, i) => {
+    const on = q.type === "multi" ? Array.isArray(sel) && sel.includes(i) : sel === i;
+    h += '<div class="opt' + (on ? " sel" : "") + '" data-opt="' + i + '" tabindex="0" role="button"><span class="k">' + keys[i] + '</span><span>' + esc(o) + '</span></div>';
+  });
+  h += '<div class="row" style="margin-top:16px;justify-content:space-between">' +
+    '<button class="btn" id="qPrev"' + (QZ.i === 0 ? " disabled" : "") + '>Back</button>' +
+    '<button class="btn pri" id="qNext">' + (QZ.i + 1 === QZ.qs.length ? "Submit test" : "Next") + '</button></div></div></div>';
+  v.innerHTML = h;
+  v.querySelectorAll("[data-opt]").forEach(el => {
+    const pick = () => {
+      const i = +el.dataset.opt;
+      if (q.type === "multi") { const a = Array.isArray(sel) ? sel.slice() : []; const k = a.indexOf(i); k >= 0 ? a.splice(k, 1) : a.push(i); QZ.answers[q.id] = a; }
+      else QZ.answers[q.id] = i;
+      render();
+    };
+    el.onclick = pick;
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } };
+  });
+  $("#qPrev").onclick = () => { QZ.i--; render(); };
+  $("#qNext").onclick = () => {
+    if (QZ.answers[q.id] === undefined || (Array.isArray(QZ.answers[q.id]) && !QZ.answers[q.id].length)) { toast("Choose an answer to continue."); return; }
+    if (QZ.i + 1 === QZ.qs.length) submitQuiz(c); else { QZ.i++; render(); }
+  };
+  wire(v);
+}
+function submitQuiz(c) {
+  let right = 0;
+  QZ.qs.forEach(q => {
+    const a = QZ.answers[q.id];
+    if (q.type === "multi") { const A = Array.isArray(a) ? a.slice().sort() : [], B = q.answer.slice().sort(); if (A.length === B.length && A.every((x, i) => x === B[i])) right++; }
+    else if (a === q.answer) right++;
+  });
+  const score = Math.round(right / QZ.qs.length * 100);
+  const passed = score >= c.finalQuiz.passScore;
+  const today = new Date().toISOString().slice(0, 10);
+  S.attempts[me.id] = S.attempts[me.id] || [];
+  S.attempts[me.id].push({ courseId: c.id, score, passed, when: today });
+  if (passed && !certFor(me.id, c.id)) {
+    S.certs[me.id] = S.certs[me.id] || [];
+    S.certs[me.id].push({ courseId: c.id, number: "VAA-" + today.slice(2, 4) + today.slice(5, 7) + "-" + Math.floor(1000 + Math.random() * 8999), date: today });
+    S.notifs.unshift({ id: uid("n"), text: "Certificate earned: " + c.title, when: today, to: me.id });
+  } else {
+    S.notifs.unshift({ id: uid("n"), text: "Test result for " + c.title + ": " + score + "%", when: today, to: me.id });
+  }
+  QZ.done = true; QZ.score = score; QZ.passed = passed; QZ.right = right;
+  save(); render();
+}
+function quizResult(v, c) {
+  const attempts = (S.attempts[me.id] || []).filter(a => a.courseId === c.id).length;
+  const left = Math.max(0, c.finalQuiz.attempts - attempts);
+  let h = '<div class="quiz"><div class="qbox result">' +
+    '<div class="eyebrow">' + esc(c.title) + ' &middot; Course test</div>' +
+    '<div class="score" style="color:' + (QZ.passed ? "var(--pass)" : "var(--fail)") + '">' + QZ.score + '%</div>' +
+    '<div style="margin:10px 0 4px"><span class="pill ' + (QZ.passed ? "ok" : "no") + '">' + (QZ.passed ? "&#10003; Passed" : "&#10007; Not passed") + '</span></div>' +
+    '<p class="muted" style="margin:6px 0 20px">' + QZ.right + ' of ' + QZ.qs.length + ' correct &middot; ' + c.finalQuiz.passScore + '% required</p>';
+  if (QZ.passed) h += '<div class="row" style="justify-content:center"><button class="btn brass" data-cert="' + c.id + '">View certificate</button><button class="btn" data-act="back" data-id="' + c.id + '">Back to course</button></div>';
+  else h += '<div class="row" style="justify-content:center">' + (left > 0 ? '<button class="btn pri" id="retake">Retake test (' + left + ' left)</button>' : '') + '<button class="btn" data-act="back" data-id="' + c.id + '">Review the lessons</button></div>';
+  h += '</div></div>';
+  v.innerHTML = h;
+  const r = $("#retake"); if (r) r.onclick = () => { QZ = null; render(); };
+  wire(v);
+}
+
+/* ============ CERTIFICATES ============ */
+function pageCerts(v) {
+  const certs = S.certs[me.id] || [];
+  v.innerHTML = '<div class="page-head"><div><h1>Certificates</h1><p>Earned certifications stay on your record permanently.</p></div></div>' +
+    (certs.length ? '<div class="certs">' + certs.map(certCard).join("") + '</div>'
+      : '<div class="card empty"><h3 style="font-size:17px">No certificates yet</h3><p class="muted" style="margin-top:6px">Finish a course and pass its test to earn one.</p></div>');
+  wire(v);
+}
+function certHTML(user, c, rec) {
+  return '<div class="cert" id="certPaper"><div class="ac">' + esc(S.schoolName) + '</div>' +
+    '<h2>Certificate of Completion</h2>' +
+    '<div class="ac" style="letter-spacing:.1em;color:#6b5a38">This certifies that</div>' +
+    '<div class="who">' + esc(user.name) + '</div>' +
+    '<div style="font-size:13px;color:#6b5a38">has completed all required lessons and passed the course examination</div>' +
+    '<div class="crs">' + esc(c.title) + '</div>' +
+    '<hr><div class="sealbig">VAA</div>' +
+    '<div class="foot"><div><b>Date</b><br>' + fmtDate(rec.date) + '</div>' +
+    '<div style="text-align:center"><b>Certificate No.</b><br><span style="font-family:IBM Plex Mono,monospace">' + esc(rec.number) + '</span></div>' +
+    '<div style="text-align:right"><b>Issued by</b><br>' + esc(S.signer) + '</div></div></div>';
+}
+function pageCert(v) {
+  const c = courseById(route.id), u = route.uid ? userById(route.uid) : me;
+  const rec = certFor(u.id, route.id);
+  if (!c || !rec) return go("certs");
+  v.innerHTML = '<div class="row" style="margin-bottom:16px"><button class="btn sm" data-act="' + (me.role === "admin" && route.uid ? "students" : "certs") + '">&larr; Back</button><div class="sp" style="flex:1"></div>' +
+    '<button class="btn" id="printCert">Download / print</button></div>' + certHTML(u, c, rec) +
+    '<p class="muted" style="text-align:center;font-size:12.5px;margin-top:14px">In the live build this also exports as a PDF and is attached to the student record.</p>';
+  $("#printCert").onclick = () => window.print();
+  wire(v);
+}
+</script>
+<script>
+const CATS = ["General", "Escrow", "Transactions", "CRM", "Appointments", "Real Estate Questions", "Tips & Tricks", "Announcements"];
+function postCard(p, compact) {
+  const a = userById(p.author) || { name: "Unknown" };
+  return '<div class="post" data-post="' + p.id + '" style="cursor:pointer"><div class="av">' + initials(a.name) + '</div><div style="flex:1;min-width:0">' +
+    '<h3>' + esc(p.title) + '</h3><div class="meta">' + esc(a.name) + ' &middot; ' + esc(p.cat) + ' &middot; ' + ago(p.when) + '</div>' +
+    '<p>' + esc(compact ? (p.body.length > 150 ? p.body.slice(0, 150) + "…" : p.body) : p.body) + '</p>' +
+    '<div class="acts"><button data-like="' + p.id + '">&#9825; ' + p.likes + '</button><button>&#128172; ' + p.replies.length + '</button></div></div></div>';
+}
+function pageCommunity(v) {
+  const admin = me.role === "admin";
+  const cat = route.cat || "All";
+  const list = S.posts.filter(p => cat === "All" || p.cat === cat);
+  let h = '<div class="page-head"><div><h1>VA Community</h1><p>' + (admin ? "Moderate the team board. Posts and replies from every VA." : "Ask the team. Search before you post — it has probably come up.") + '</p></div><div class="sp"></div><button class="btn pri" data-act="newpost">New post</button></div>';
+  h += '<div class="chips" style="margin-bottom:16px">' + ["All"].concat(CATS).map(c => '<button class="chip' + (c === cat ? " on" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>').join("") + '</div>';
+  h += '<div class="grid">' + (list.length ? list.map(p => postCard(p, true)).join("") : '<div class="card empty">Nothing in this category yet.</div>') + '</div>';
+  v.innerHTML = h; wire(v);
+}
+function pagePost(v) {
+  const p = S.posts.find(x => x.id === route.id); if (!p) return go("community");
+  const a = userById(p.author) || { name: "Unknown" };
+  let h = '<div class="row" style="margin-bottom:14px"><button class="btn sm" data-act="community">&larr; VA Community</button></div>';
+  h += '<div class="card"><div class="eyebrow">' + esc(p.cat) + '</div><h1 style="font-size:24px;margin:6px 0 4px">' + esc(p.title) + '</h1>' +
+    '<div class="muted" style="font-size:13px">' + esc(a.name) + ' &middot; ' + fmtDate(p.when) + '</div>' +
+    '<p style="margin:14px 0 0;color:var(--text-2)">' + esc(p.body) + '</p>' +
+    '<div class="acts" style="display:flex;gap:14px;margin-top:14px;font-size:13px;color:var(--text-3)"><button data-like="' + p.id + '" style="background:none;border:0;cursor:pointer;color:inherit">&#9825; ' + p.likes + ' likes</button>' +
+    (me.role === "admin" ? '<button class="btn sm danger" data-delpost="' + p.id + '">Delete post</button>' : '') + '</div></div>';
+  h += '<h2 style="font-size:17px;margin:22px 0 10px">' + p.replies.length + ' repl' + (p.replies.length === 1 ? "y" : "ies") + '</h2>';
+  h += p.replies.map(r => { const u = userById(r.author) || { name: "Unknown" }; return '<div class="reply"><b>' + esc(u.name) + '</b> <span style="color:var(--text-3)">&middot; ' + ago(r.when) + '</span><div>' + esc(r.body) + '</div></div>'; }).join("");
+  h += '<div class="card" style="margin-top:16px"><label class="fld">Your reply<textarea id="rBody" rows="3" placeholder="Answer or add to this thread"></textarea></label><div class="row" style="margin-top:10px"><button class="btn pri" id="rSend">Post reply</button></div></div>';
+  v.innerHTML = h;
+  $("#rSend").onclick = () => {
+    const b = $("#rBody").value.trim(); if (!b) return;
+    p.replies.push({ author: me.id, body: b, when: new Date().toISOString() });
+    save(); toast("Reply posted"); render();
+  };
+  wire(v);
+}
+function newPostModal() {
+  modal("New post", '<label class="fld">Title<input id="npT" placeholder="What is your question?"></label>' +
+    '<label class="fld">Category<select id="npC">' + CATS.map(c => '<option>' + esc(c) + '</option>').join("") + '</select></label>' +
+    '<label class="fld">Message<textarea id="npB" rows="5" placeholder="Give enough detail that someone can actually answer"></textarea></label>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="npGo">Post</button>');
+  $("#npGo").onclick = () => {
+    const t = $("#npT").value.trim(), b = $("#npB").value.trim();
+    if (!t || !b) { toast("Title and message are required."); return; }
+    S.posts.unshift({ id: uid("p"), cat: $("#npC").value, author: me.id, title: t, body: b, when: new Date().toISOString(), likes: 0, replies: [] });
+    save(); closeModal(); toast("Posted"); go("community");
+  };
+}
+
+/* ============ RESEARCH ============ */
+function pageResearch(v) {
+  const q = route.q || "";
+  const hits = q ? S.kb.filter(a => (a.title + " " + a.body + " " + a.cat).toLowerCase().includes(q.toLowerCase())) : S.kb;
+  let h = '<div class="page-head"><div><h1>Research</h1><p>School knowledge is approved by your administrator. Web research is everything else — treat it as background, not instruction.</p></div></div>';
+  h += '<div class="card" style="margin-bottom:18px"><label class="fld">Search<input id="rq" value="' + esc(q) + '" placeholder="escrow timeline, wire fraud, prelim…"></label><div class="row" style="margin-top:10px"><button class="btn pri" id="rgo">Search</button></div></div>';
+  if (S.flags.knowledge_base_enabled) {
+    h += '<h2 style="font-size:18px;margin:0 0 4px">School knowledge</h2><p class="muted" style="margin:0 0 12px;font-size:13.5px">Administrator-approved. This is the answer that applies to our files.</p>' +
+      '<div class="grid">' + (hits.length ? hits.map(a => '<div class="kb-art" data-kb="' + a.id + '"><div class="eyebrow">' + esc(a.cat) + '</div><h3>' + esc(a.title) + '</h3><p class="muted" style="margin:0;font-size:13.5px">' + esc(a.body.slice(0, 130)) + '…</p></div>').join("") : '<div class="card empty">No approved article matches that yet. Post it in the community and it may become one.</div>') + '</div>';
+  }
+  if (S.flags.research_enabled) {
+    h += '<h2 style="font-size:18px;margin:26px 0 4px">Web research</h2><p class="muted" style="margin:0 0 12px;font-size:13.5px">External sources. Not approved by the academy and not a substitute for your agent\'s instructions.</p>';
+    h += '<div class="grid">' + (q ? [
+      ["Investopedia — " + q, "investopedia.com", "General definition and background reading."],
+      ["Consumer guide: " + q, "consumerfinance.gov", "Regulator-published consumer material."],
+      ["State association article on " + q, "realtor.org", "Industry association explainer."],
+    ].map(r => '<div class="kb-art"><h3>' + esc(r[0]) + '</h3><div class="mono" style="font-size:11.5px;color:var(--brass-ink)">' + esc(r[1]) + '</div><p class="muted" style="margin:5px 0 0;font-size:13.5px">' + esc(r[2]) + '</p></div>').join("")
+      : '<div class="card empty">Enter a search above to pull outside sources.</div>') + '</div>';
+    h += '<div class="ai-note" style="margin-top:12px">Demo results. The live build calls a real search API and opens each result in a new tab.</div>';
+  }
+  v.innerHTML = h;
+  $("#rgo").onclick = () => go("research", { q: $("#rq").value });
+  $("#rq").onkeydown = (e) => { if (e.key === "Enter") go("research", { q: $("#rq").value }); };
+  wire(v);
+}
+function kbModal(id) {
+  const a = S.kb.find(x => x.id === id); if (!a) return;
+  modal(a.title, '<div class="eyebrow">' + esc(a.cat) + ' &middot; approved</div><div style="white-space:pre-wrap;color:var(--text-2);font-size:14.5px">' + esc(a.body) + '</div>', '<button class="btn" onclick="closeModal()">Close</button>');
+}
+
+/* ============ AI ASSISTANT ============ */
+function pageAssistant(v) {
+  v.innerHTML = '<div class="page-head"><div><h1>Training Assistant</h1><p>Answers training questions from school-approved material.</p></div></div>' +
+    '<div class="card"><label class="fld">Ask a training question<input id="aiq" placeholder="What is an appraisal contingency?"></label><div class="row" style="margin-top:10px"><button class="btn pri" id="aigo">Ask</button></div></div>' +
+    '<div id="aiOut" style="margin-top:14px"></div>' +
+    '<div class="ai-note" style="margin-top:16px"><b>AI-generated answer.</b> This assistant is a training and research tool. It is not a substitute for instructions from your supervising agent, broker, escrow officer, lender, title company, attorney, or other appropriate professional. Confirm anything that affects a live file with your agent.</div>';
+  $("#aigo").onclick = () => {
+    const q = $("#aiq").value.trim(); if (!q) return;
+    const hit = S.kb.find(a => q.toLowerCase().split(/\s+/).some(w => w.length > 4 && a.body.toLowerCase().includes(w)));
+    $("#aiOut").innerHTML = '<div class="card"><div class="eyebrow">AI-generated answer &middot; ' + (hit ? "sourced from school knowledge" : "no approved source found") + '</div>' +
+      '<p style="margin:8px 0 0;color:var(--text-2)">' + (hit ? esc(hit.body.slice(0, 320)) + "…" : "There is no approved article covering that yet. Ask in the VA Community, or check with your agent.") + '</p>' +
+      (hit ? '<div style="margin-top:10px"><button class="btn sm" data-kb="' + hit.id + '">Open source article</button></div>' : '') + '</div>';
+    wire($("#aiOut"));
+  };
+  wire(v);
+}
+
+/* ============ PROFILE ============ */
+function pageProfile(v) {
+  const certs = S.certs[me.id] || [], att = S.attempts[me.id] || [];
+  let h = '<div class="page-head"><div><h1>Profile</h1></div></div>';
+  h += '<div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div style="width:58px;height:58px;border-radius:50%;background:var(--brass-soft);color:var(--brass-ink);display:grid;place-items:center;font-weight:700;font-size:20px">' + initials(me.name) + '</div>' +
+    '<div style="flex:1;min-width:180px"><h2 style="font-size:20px">' + esc(me.name) + '</h2><div class="muted" style="font-size:13.5px">' + esc(me.title) + ' &middot; joined ' + fmtDate(me.joined) + '</div></div>' +
+    '<div style="min-width:170px">' + bar(overallPct(me.id)) + '<div class="muted" style="font-size:12.5px;margin-top:5px">' + overallPct(me.id) + '% overall training</div></div></div>';
+  h += '<div class="stats" style="margin-top:16px">' + stat("Certificates", certs.length) + stat("Tests taken", att.length) + stat("Lessons completed", S.courses.reduce((a, c) => a + courseDoneCount(me.id, c), 0)) + '</div>';
+  if (S.flags.badges_enabled) {
+    const badges = [["First Course", certs.length >= 1], ["Escrow Certified", coursePassed(me.id, "c_escrow")], ["CRM Master", coursePassed(me.id, "c_crm")], ["Transaction Pro", coursePassed(me.id, "c_tc")]];
+    h += '<h2 style="font-size:18px;margin:24px 0 10px">Badges</h2><div class="row">' + badges.map(b => '<span class="pill ' + (b[1] ? "ok" : "flat") + '">' + esc(b[0]) + '</span>').join("") + '</div>';
+  }
+  h += '<h2 style="font-size:18px;margin:24px 0 10px">Certifications</h2>' + (certs.length ? '<div class="certs">' + certs.map(certCard).join("") + '</div>' : '<div class="card empty">None yet.</div>');
+  v.innerHTML = h; wire(v);
+}
+
+/* ============ GLOBAL SEARCH ============ */
+function pageSearch(v) {
+  const q = (route.q || "").trim(), lq = q.toLowerCase();
+  const cs = S.courses.filter(c => (c.title + c.desc + c.category).toLowerCase().includes(lq));
+  const les = []; S.courses.forEach(c => allLessons(c).forEach(l => { if ((l.title + l.desc).toLowerCase().includes(lq)) les.push({ c, l }); }));
+  const kb = S.flags.knowledge_base_enabled ? S.kb.filter(a => (a.title + a.body).toLowerCase().includes(lq)) : [];
+  const po = S.flags.community_enabled ? S.posts.filter(p => (p.title + p.body).toLowerCase().includes(lq)) : [];
+  let h = '<div class="page-head"><div><div class="eyebrow">Search</div><h1>' + esc(q) + '</h1><p>' + (cs.length + les.length + kb.length + po.length) + ' results across the school</p></div></div>';
+  const grp = (t, n, items) => '<div class="srch-group"><h3>' + esc(t) + ' <span class="pill flat">' + n + '</span></h3>' + (n ? '<div class="grid">' + items + '</div>' : '<div class="muted" style="font-size:13.5px">No matches</div>') + '</div>';
+  h += grp("Courses", cs.length, cs.map(c => '<div class="kb-art" data-course="' + c.id + '"><h3>' + esc(c.title) + '</h3><p class="muted" style="margin:0;font-size:13.5px">' + esc(c.desc) + '</p></div>').join(""));
+  h += grp("Lessons", les.length, les.slice(0, 8).map(x => '<div class="kb-art" data-lesson="' + x.l.id + '"><div class="eyebrow">' + esc(x.c.title) + '</div><h3>' + esc(x.l.title) + '</h3></div>').join(""));
+  if (S.flags.knowledge_base_enabled) h += grp("Knowledge Base", kb.length, kb.map(a => '<div class="kb-art" data-kb="' + a.id + '"><div class="eyebrow">' + esc(a.cat) + '</div><h3>' + esc(a.title) + '</h3></div>').join(""));
+  if (S.flags.community_enabled) h += grp("Community", po.length, po.map(p => postCard(p, true)).join(""));
+  if (S.flags.research_enabled) h += '<div class="srch-group"><h3>Web research</h3><button class="btn sm" data-act="researchq" data-id="' + esc(q) + '">Search outside sources for “' + esc(q) + '”</button></div>';
+  v.innerHTML = h; wire(v);
+}
+</script>
+<script>
+function students() { return S.users.filter(u => u.role === "student"); }
+function pageAdminDash(v) {
+  const st = students();
+  const totalCerts = st.reduce((n, u) => n + (S.certs[u.id] || []).length, 0);
+  const avg = (() => { const all = st.flatMap(u => S.attempts[u.id] || []); return all.length ? Math.round(all.reduce((n, a) => n + a.score, 0) / all.length) : 0; })();
+  const inactive = st.filter(u => { const d = S.lastActive && S.lastActive[u.id]; return d && (Date.now() - new Date(d)) / 86400000 > 10; });
+  let h = '<div class="page-head"><div><h1>Academy Dashboard</h1><p>' + st.length + ' students &middot; ' + S.courses.length + ' courses &middot; ' + (S.mode === "simple" ? "Simple mode" : "Expanded mode") + '</p></div><div class="sp"></div><button class="btn pri" data-act="newcourse">+ Create course</button></div>';
+  h += '<div class="stats">' + stat("Students", st.length) + stat("Certificates issued", totalCerts) + stat("Average test score", avg + "%") + stat("Inactive 10+ days", inactive.length) + '</div>';
+  h += '<h2 style="font-size:18px;margin:26px 0 12px">Student progress</h2><div class="card" style="padding:14px 4px"><div class="tbl-wrap"><table><thead><tr><th>VA</th><th>Current course</th><th>Progress</th><th>Best score</th><th>Certificate</th><th>Last active</th></tr></thead><tbody>';
+  st.forEach(u => {
+    const n = nextLesson(u.id);
+    const cur = n ? n.course : S.courses[0];
+    const best = (S.attempts[u.id] || []).reduce((b, a) => a.score > b ? a.score : b, 0);
+    const cert = certFor(u.id, cur.id);
+    h += '<tr class="click" data-student="' + u.id + '"><td><b>' + esc(u.name) + '</b><div class="muted" style="font-size:12px">' + esc(u.title) + '</div></td>' +
+      '<td>' + esc(n ? cur.title : "All complete") + '</td>' +
+      '<td style="min-width:130px">' + bar(coursePct(u.id, cur)) + '<span class="mono" style="font-size:12px;color:var(--text-2)">' + coursePct(u.id, cur) + '%</span></td>' +
+      '<td class="mono">' + (best ? best + "%" : "—") + '</td>' +
+      '<td>' + (cert ? '<span class="pill ok">Yes</span>' : '<span class="pill flat">No</span>') + '</td>' +
+      '<td class="mono" style="font-size:12.5px">' + fmtDate(S.lastActive && S.lastActive[u.id]) + '</td></tr>';
+  });
+  h += '</tbody></table></div></div>';
+  h += '<h2 style="font-size:18px;margin:26px 0 12px">Announcements</h2><div class="grid">' +
+    S.ann.map(a => '<div class="ann"><b>' + esc(a.title) + '</b><p>' + esc(a.body) + '</p><div class="muted" style="font-size:12px;margin-top:6px">' + fmtDate(a.when) + (a.pin ? ' &middot; pinned to student dashboard' : '') + '</div></div>').join("") +
+    '<div><button class="btn" data-act="newann">+ New announcement</button></div></div>';
+  v.innerHTML = h; wire(v);
+}
+function pageStudents(v) {
+  let h = '<div class="page-head"><div><h1>Students</h1><p>Every VA, their login, what they have finished, and what they scored.</p></div><div class="sp"></div><button class="btn pri" data-act="newstudent">+ Add VA</button></div>';
+  h += '<div class="card" style="padding:14px 4px"><div class="tbl-wrap"><table><thead><tr><th>VA</th><th>Email (sign-in ID)</th><th>Phone</th><th>Account</th><th>Overall</th><th>Certificates</th></tr></thead><tbody>';
+  students().forEach(u => {
+    h += '<tr class="click" data-student="' + u.id + '"><td><b>' + esc(u.name) + '</b><div class="muted" style="font-size:12px">' + esc(u.title) + '</div></td>' +
+      '<td class="mono" style="font-size:12.5px">' + esc(u.email || "—") + '</td>' +
+      '<td class="mono" style="font-size:12.5px">' + esc(u.phone || "—") + '</td>' +
+      '<td>' + (u.status === "invited" ? '<span class="pill wait">Invited</span>' : '<span class="pill ok">Active</span>') + '</td>' +
+      '<td style="min-width:120px">' + bar(overallPct(u.id)) + '<span class="mono" style="font-size:12px;color:var(--text-2)">' + overallPct(u.id) + '%</span></td>' +
+      '<td class="mono">' + (S.certs[u.id] || []).length + '</td></tr>';
+  });
+  h += '</tbody></table></div></div>';
+  v.innerHTML = h; wire(v);
+}
+function pageStudent(v) {
+  const u = userById(route.id); if (!u) return go("students");
+  let h = '<div class="row" style="margin-bottom:14px"><button class="btn sm" data-act="students">&larr; Students</button></div>';
+  h += '<div class="page-head"><div><div class="eyebrow">Training record</div><h1>' + esc(u.name) + '</h1><p>' + esc(u.title) + ' &middot; joined ' + fmtDate(u.joined) + ' &middot; last active ' + fmtDate(S.lastActive && S.lastActive[u.id]) + '</p></div><div class="sp"></div><button class="btn" data-edituser="' + u.id + '">Edit VA</button></div>';
+  h += '<div class="card" style="margin-bottom:16px"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:220px">' +
+    '<div class="eyebrow">Account</div>' +
+    '<div class="term" style="border-top:0;padding-top:8px"><b>Email (sign-in ID)</b><span class="mono">' + esc(u.email || "not set") + '</span></div>' +
+    '<div class="term"><b>Phone</b><span class="mono">' + esc(u.phone || "not set") + '</span></div>' +
+    '<div class="term"><b>Status</b><span>' + (u.status === "invited" ? '<span class="pill wait">Invited ' + (u.inviteSentAt ? fmtDate(u.inviteSentAt) : "") + '</span>' : '<span class="pill ok">Active</span>') + '</span></div>' +
+    (u.tempPass ? '<div class="term"><b>Temporary password</b><span class="mono">' + esc(u.tempPass) + '</span></div>' : '') + '</div>' +
+    '<div class="row" style="gap:6px"><button class="btn sm" data-resend="' + u.id + '">Resend invite</button><button class="btn sm" data-resetpw="' + u.id + '">Reset password</button></div></div></div>';
+  h += '<div class="stats">' + stat("Overall progress", overallPct(u.id) + "%") + stat("Courses passed", (S.certs[u.id] || []).length) + stat("Tests taken", (S.attempts[u.id] || []).length) + stat("Lessons completed", S.courses.reduce((a, c) => a + courseDoneCount(u.id, c), 0)) + '</div>';
+  h += '<h2 style="font-size:18px;margin:24px 0 12px">Course by course</h2><div class="grid">';
+  S.courses.forEach(c => {
+    const pct = coursePct(u.id, c), best = bestAttempt(u.id, c.id), cert = certFor(u.id, c.id);
+    const atts = (S.attempts[u.id] || []).filter(a => a.courseId === c.id);
+    h += '<div class="card"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:190px"><h3 style="font-size:16px">' + esc(c.title) + '</h3>' +
+      '<div class="muted" style="font-size:13px;margin:3px 0 8px">' + courseDoneCount(u.id, c) + ' of ' + allLessons(c).length + ' lessons &middot; ' + atts.length + ' attempt' + (atts.length === 1 ? "" : "s") + '</div>' + bar(pct, !!cert) + '</div>' +
+      '<div style="text-align:right;min-width:150px">' + (cert ? '<span class="pill ok">Certified</span>' : pct ? '<span class="pill wait">In progress</span>' : '<span class="pill flat">Not started</span>') +
+      '<div class="mono" style="font-size:13px;margin-top:7px">' + (best ? "Best " + best.score + "%" : "No score") + '</div>' +
+      (cert ? '<button class="btn sm" style="margin-top:8px" data-certu="' + u.id + '|' + c.id + '">View certificate</button>' : '') +
+      (atts.length ? '<button class="btn sm" style="margin-top:6px" data-reset="' + u.id + '|' + c.id + '">Reset attempts</button>' : '') + '</div></div>';
+    if (atts.length) h += '<div style="margin-top:10px;border-top:1px solid var(--line-soft);padding-top:9px;font-size:13px;color:var(--text-2)">' + atts.map(a => '<span class="mono" style="margin-right:14px">' + fmtDate(a.when) + ' — ' + a.score + '% ' + (a.passed ? "&#10003;" : "&#10007;") + '</span>').join("") + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  v.innerHTML = h; wire(v);
+}
+function moveCourse(id, dir) {
+  const i = S.courses.findIndex(c => c.id === id), j = i + dir;
+  if (i < 0 || j < 0 || j >= S.courses.length) return;
+  const [c] = S.courses.splice(i, 1); S.courses.splice(j, 0, c);
+  save(); render();
+}
+function dropCourse(srcId, tgtId) {
+  if (!srcId || srcId === tgtId) return;
+  const i = S.courses.findIndex(c => c.id === srcId), j = S.courses.findIndex(c => c.id === tgtId);
+  if (i < 0 || j < 0) return;
+  const [c] = S.courses.splice(i, 1); S.courses.splice(j, 0, c);
+  save(); toast("Course moved"); render();
+}
+function pageAdminCourses(v) {
+  let h = '<div class="page-head"><div><h1>Courses</h1><p>Drag a row, or use the arrows, to set the order VAs see. Everything here is stored as data.</p></div><div class="sp"></div><button class="btn pri" data-act="newcourse">+ Create course</button></div>';
+  h += '<div class="card" style="padding:14px 4px"><div class="tbl-wrap"><table><thead><tr><th style="width:56px">Order</th><th>Course</th><th>Category</th><th>Modules</th><th>Lessons</th><th>Questions</th><th>Enrolled passing</th><th></th></tr></thead><tbody id="courseRows">';
+  S.courses.forEach((c, i) => {
+    const passing = students().filter(u => coursePassed(u.id, c.id)).length;
+    h += '<tr class="click crow" draggable="true" data-crow="' + c.id + '" data-builder="' + c.id + '">' +
+      '<td style="white-space:nowrap"><span class="drag" title="Drag to reorder" style="cursor:grab;color:var(--text-3);letter-spacing:-2px;margin-right:6px">&#8942;&#8942;</span><span class="mono" style="font-size:12px;color:var(--text-3)">' + (i + 1) + '</span></td>' +
+      '<td><b>' + esc(c.title) + '</b> ' + (c.demo ? '<span class="demo-tag">DEMO</span>' : '') + '</td><td class="muted">' + esc(c.category) + '</td>' +
+      '<td class="mono">' + c.modules.length + '</td><td class="mono">' + allLessons(c).length + '</td><td class="mono">' + c.finalQuiz.questions.length + '</td>' +
+      '<td class="mono">' + passing + ' / ' + students().length + '</td>' +
+      '<td style="text-align:right;white-space:nowrap">' +
+        '<button class="btn sm" data-cup="' + c.id + '" aria-label="Move up"' + (i === 0 ? " disabled" : "") + '>&uarr;</button> ' +
+        '<button class="btn sm" data-cdown="' + c.id + '" aria-label="Move down"' + (i === S.courses.length - 1 ? " disabled" : "") + '>&darr;</button> ' +
+        '<button class="btn sm" data-builder2="' + c.id + '">Edit</button></td></tr>';
+  });
+  h += '</tbody></table></div></div>';
+  h += '<p class="muted" style="font-size:13px;margin-top:10px">This order drives the student course list and the "Continue training" card on their dashboard.</p>';
+  v.innerHTML = h;
+  let src = null;
+  v.querySelectorAll("[data-crow]").forEach(row => {
+    row.ondragstart = (e) => { src = row.dataset.crow; row.style.opacity = ".4"; e.dataTransfer.effectAllowed = "move"; };
+    row.ondragend = () => { row.style.opacity = "1"; v.querySelectorAll(".crow").forEach(r => r.style.boxShadow = ""); };
+    row.ondragover = (e) => { e.preventDefault(); row.style.boxShadow = "inset 0 2px 0 var(--brass)"; };
+    row.ondragleave = () => { row.style.boxShadow = ""; };
+    row.ondrop = (e) => { e.preventDefault(); dropCourse(src, row.dataset.crow); };
+  });
+  wire(v);
+}
+function pageAdminKB(v) {
+  let h = '<div class="page-head"><div><h1>Knowledge Base</h1><p>Approved reference material. Students can search it; only you can change it.</p></div><div class="sp"></div><button class="btn pri" data-act="newkb">+ New article</button></div>';
+  h += '<div class="grid">' + S.kb.map(a => '<div class="card"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:200px"><div class="eyebrow">' + esc(a.cat) + '</div><h3 style="font-size:16px;margin:3px 0 5px">' + esc(a.title) + '</h3><p class="muted" style="margin:0;font-size:13.5px">' + esc(a.body.slice(0, 160)) + '…</p></div>' +
+    '<div class="row" style="gap:6px"><button class="btn sm" data-kb="' + a.id + '">View</button><button class="btn sm" data-editkb="' + a.id + '">Edit</button></div></div></div>').join("") + '</div>';
+  v.innerHTML = h; wire(v);
+}
+function pageAdminCerts(v) {
+  const rows = [];
+  students().forEach(u => (S.certs[u.id] || []).forEach(c => rows.push({ u, c })));
+  rows.sort((a, b) => b.c.date.localeCompare(a.c.date));
+  let h = '<div class="page-head"><div><h1>Certificates</h1><p>' + rows.length + ' issued. Each stays attached to the VA record permanently.</p></div></div>';
+  h += '<div class="card" style="padding:14px 4px"><div class="tbl-wrap"><table><thead><tr><th>Certificate no.</th><th>VA</th><th>Course</th><th>Issued</th><th></th></tr></thead><tbody>' +
+    (rows.length ? rows.map(r => '<tr><td class="mono">' + esc(r.c.number) + '</td><td>' + esc(r.u.name) + '</td><td>' + esc((courseById(r.c.courseId) || {}).title || "—") + '</td><td class="mono" style="font-size:12.5px">' + fmtDate(r.c.date) + '</td><td style="text-align:right"><button class="btn sm" data-certu="' + r.u.id + '|' + r.c.courseId + '">View</button></td></tr>').join("")
+      : '<tr><td colspan="5" class="empty">No certificates issued yet.</td></tr>') + '</tbody></table></div></div>';
+  v.innerHTML = h; wire(v);
+}
+function pageReports(v) {
+  const st = students();
+  let h = '<div class="page-head"><div><h1>Reporting</h1><p>Completion, scores, and who has gone quiet.</p></div></div>';
+  h += '<h2 style="font-size:18px;margin:0 0 12px">Completion rate by course</h2><div class="grid">';
+  S.courses.forEach(c => {
+    const passed = st.filter(u => coursePassed(u.id, c.id)).length;
+    const rate = st.length ? Math.round(passed / st.length * 100) : 0;
+    const scores = st.flatMap(u => (S.attempts[u.id] || []).filter(a => a.courseId === c.id).map(a => a.score));
+    const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    const fails = st.flatMap(u => (S.attempts[u.id] || []).filter(a => a.courseId === c.id && !a.passed)).length;
+    h += '<div class="card"><div class="row" style="align-items:center"><div style="flex:1;min-width:200px"><b>' + esc(c.title) + '</b>' + bar(rate, rate === 100) + '</div>' +
+      '<div class="row" style="gap:16px"><div><div class="eyebrow">Passed</div><b class="mono">' + passed + '/' + st.length + '</b></div>' +
+      '<div><div class="eyebrow">Avg score</div><b class="mono">' + (avg || "—") + (avg ? "%" : "") + '</b></div>' +
+      '<div><div class="eyebrow">Failed attempts</div><b class="mono">' + fails + '</b></div></div></div></div>';
+  });
+  h += '</div>';
+  const inactive = st.filter(u => { const d = S.lastActive && S.lastActive[u.id]; return d && (Date.now() - new Date(d)) / 86400000 > 10; });
+  h += '<h2 style="font-size:18px;margin:26px 0 12px">Inactive students</h2>' +
+    (inactive.length ? '<div class="grid">' + inactive.map(u => '<div class="card row"><b style="flex:1">' + esc(u.name) + '</b><span class="pill wait">Last active ' + fmtDate(S.lastActive[u.id]) + '</span></div>').join("") + '</div>' : '<div class="card empty">Everyone has been active in the last ten days.</div>');
+  v.innerHTML = h; wire(v);
+}
+</script>
+<script>
+/* ============ COURSE BUILDER ============ */
+let dragSrc = null;
+function pageBuilder(v) {
+  const c = courseById(route.id); if (!c) return go("acourses");
+  let h = '<div class="row" style="margin-bottom:14px"><button class="btn sm" data-act="acourses">&larr; Courses</button></div>';
+  h += '<div class="page-head"><div><div class="eyebrow">Course builder</div><h1>' + esc(c.title) + '</h1><p>' + esc(c.desc) + '</p></div><div class="sp"></div>' +
+    '<button class="btn" data-act="editcourse" data-id="' + c.id + '">Course settings</button><button class="btn" data-act="dupcourse" data-id="' + c.id + '">Duplicate</button></div>';
+  c.modules.forEach((m, mi) => {
+    h += '<div class="bmod"><div class="mh"><span class="mono" style="font-size:11.5px;color:var(--text-3)">M' + (mi + 1) + '</span><span style="flex:1">' + esc(m.title) + '</span>' +
+      '<button class="btn sm" data-renmod="' + c.id + '|' + m.id + '">Rename</button>' +
+      '<button class="btn sm" data-addles="' + c.id + '|' + m.id + '">+ Lesson</button>' +
+      '<button class="btn sm danger" data-delmod="' + c.id + '|' + m.id + '">Delete</button></div>';
+    m.lessons.forEach(l => {
+      h += '<div class="bles" draggable="true" data-drag="' + l.id + '" data-mod="' + m.id + '">' +
+        '<span class="drag" title="Drag to reorder">&#8942;&#8942;</span>' +
+        '<span class="sp">' + esc(l.title) + '</span>' +
+        '<span class="mono" style="font-size:12px;color:var(--text-3)">' + l.min + ' min</span>' +
+        '<button class="btn sm" data-editles="' + l.id + '">Edit</button>' +
+        '<button class="btn sm" data-duples="' + c.id + '|' + m.id + '|' + l.id + '">Duplicate</button>' +
+        '<button class="btn sm danger" data-delles="' + c.id + '|' + m.id + '|' + l.id + '">&times;</button></div>';
+    });
+    if (!m.lessons.length) h += '<div class="bles muted">No lessons yet.</div>';
+    h += '</div>';
+  });
+  h += '<button class="btn" data-addmod="' + c.id + '">+ Add module</button>';
+  h += '<div class="card" style="margin-top:22px"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:200px"><div class="eyebrow">Course test</div>' +
+    '<h3 style="font-size:17px;margin-top:3px">' + c.finalQuiz.questions.length + ' questions</h3>' +
+    '<p class="muted" style="margin:4px 0 0;font-size:13.5px">Pass ' + c.finalQuiz.passScore + '% &middot; ' + c.finalQuiz.attempts + ' attempts &middot; ' + (c.finalQuiz.timeLimit ? c.finalQuiz.timeLimit + " min limit" : "no time limit") + (c.finalQuiz.randomize ? ' &middot; randomized' : '') + '</p></div>' +
+    '<button class="btn" data-quizedit="' + c.id + '">Edit test</button></div></div>';
+  v.innerHTML = h;
+  v.querySelectorAll("[data-drag]").forEach(el => {
+    el.ondragstart = () => { dragSrc = el.dataset.drag; el.style.opacity = ".4"; };
+    el.ondragend = () => { el.style.opacity = "1"; v.querySelectorAll(".bles").forEach(x => x.classList.remove("dragover")); };
+    el.ondragover = (e) => { e.preventDefault(); el.classList.add("dragover"); };
+    el.ondragleave = () => el.classList.remove("dragover");
+    el.ondrop = (e) => { e.preventDefault(); reorder(c, dragSrc, el.dataset.drag); };
+  });
+  wire(v);
+}
+function reorder(c, srcId, tgtId) {
+  if (!srcId || srcId === tgtId) return;
+  let sm, si, tm, ti;
+  c.modules.forEach(m => { m.lessons.forEach((l, i) => { if (l.id === srcId) { sm = m; si = i; } if (l.id === tgtId) { tm = m; ti = i; } }); });
+  if (!sm || !tm) return;
+  const [l] = sm.lessons.splice(si, 1);
+  tm.lessons.splice(ti, 0, l);
+  save(); toast("Lesson moved"); render();
+}
+function lessonModal(lid) {
+  const f = lessonById(lid); if (!f) return;
+  const l = f.lesson;
+  modal("Edit lesson", '<label class="fld">Lesson title<input id="lT" value="' + esc(l.title) + '"></label>' +
+    '<label class="fld">Video URL<input id="lV" value="' + esc(l.video) + '" placeholder="https://vimeo.com/… or an unlisted YouTube link"></label>' +
+    '<label class="fld">Length (minutes)<input id="lM" type="number" min="1" value="' + l.min + '"></label>' +
+    '<label class="fld">Description<textarea id="lD" rows="3">' + esc(l.desc) + '</textarea></label>' +
+    '<label class="fld">Lesson notes (one per line)<textarea id="lN" rows="3">' + esc((l.notes || []).join("\n")) + '</textarea></label>' +
+    '<label class="fld">Resources (one per line)<textarea id="lR" rows="2">' + esc((l.resources || []).join("\n")) + '</textarea></label>' +
+    '<div class="ai-note">Videos are referenced by URL, never uploaded into the database.</div>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="lSave">Save lesson</button>');
+  $("#lSave").onclick = () => {
+    l.title = $("#lT").value.trim() || l.title; l.video = $("#lV").value.trim(); l.min = +$("#lM").value || l.min;
+    l.desc = $("#lD").value.trim();
+    l.notes = $("#lN").value.split("\n").map(s => s.trim()).filter(Boolean);
+    l.resources = $("#lR").value.split("\n").map(s => s.trim()).filter(Boolean);
+    l.demo = false; save(); closeModal(); toast("Lesson saved"); render();
+  };
+}
+function courseModal(cid) {
+  const c = cid ? courseById(cid) : null;
+  const opts = S.courses.filter(x => !c || x.id !== c.id);
+  modal(c ? "Course settings" : "Create course",
+    '<label class="fld">Course name<input id="cT" value="' + esc(c ? c.title : "") + '" placeholder="Advanced Real Estate Operations"></label>' +
+    '<label class="fld">Category<input id="cC" value="' + esc(c ? c.category : "") + '" placeholder="Escrow, Operations, Systems…"></label>' +
+    '<label class="fld">Description<textarea id="cD" rows="2">' + esc(c ? c.desc : "") + '</textarea></label>' +
+    '<label class="fld">Prerequisite<select id="cP"><option value="">None</option>' + opts.map(x => '<option value="' + x.id + '"' + (c && c.prereq === x.id ? " selected" : "") + '>' + esc(x.title) + '</option>').join("") + '</select></label>' +
+    '<label class="fld">Lesson completion requires<select id="cR">' +
+      ['watch_80|Watching 80% of the video', 'watch_full|Watching the entire video', 'manual|Marking complete manually'].map(o => { const [k, t] = o.split("|"); return '<option value="' + k + '"' + (c && requiredWatch(c) === (k === "watch_full" ? 100 : k === "manual" ? 0 : 80) ? " selected" : "") + '>' + t + '</option>'; }).join("") + '</select></label>' +
+    '<label class="fld" style="flex-direction:row;align-items:center;gap:10px"><input type="checkbox" id="cDisc" style="width:auto"' + (!c || c.discussion ? " checked" : "") + '> Enable discussion on this course</label>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="cSave">' + (c ? "Save" : "Create course") + '</button>');
+  $("#cSave").onclick = () => {
+    const t = $("#cT").value.trim(); if (!t) { toast("Course name is required."); return; }
+    const data = { title: t, category: $("#cC").value.trim() || "General", desc: $("#cD").value.trim(), prereq: $("#cP").value || null, completionRule: $("#cR").value, discussion: $("#cDisc").checked };
+    if (c) { Object.assign(c, data); c.demo = false; save(); closeModal(); toast("Course updated"); render(); }
+    else {
+      try {
+        const nc = Object.assign({ id: uid("c"), modules: [{ id: uid("m"), title: "Module 1", lessons: [] }], passScore: 80, attempts: 3, demo: false,
+          finalQuiz: { passScore: 80, attempts: 3, timeLimit: 0, randomize: true, questions: [] } }, data);
+        S.courses.push(nc); save(); closeModal(); toast("Course created: " + nc.title); go("acourses");
+      } catch (err) { toast("Create failed: " + (err && err.message)); }
+    }
+  };
+}
+function quizModal(cid) {
+  const c = courseById(cid);
+  const q = c.finalQuiz;
+  modal("Course test settings",
+    '<div class="row"><label class="fld" style="flex:1">Passing score %<input id="qP" type="number" min="1" max="100" value="' + q.passScore + '"></label>' +
+    '<label class="fld" style="flex:1">Attempts allowed<input id="qA" type="number" min="1" value="' + q.attempts + '"></label>' +
+    '<label class="fld" style="flex:1">Time limit (min, 0 = none)<input id="qL" type="number" min="0" value="' + q.timeLimit + '"></label></div>' +
+    '<label class="fld" style="flex-direction:row;align-items:center;gap:10px"><input type="checkbox" id="qR" style="width:auto"' + (q.randomize ? " checked" : "") + '> Randomize question order</label>' +
+    '<div class="eyebrow" style="margin-top:6px">Questions (' + q.questions.length + ')</div>' +
+    '<div style="display:flex;flex-direction:column;gap:6px">' + q.questions.map((x, i) => '<div class="bles" style="border:1px solid var(--line);border-radius:6px"><span class="mono" style="font-size:11px;color:var(--text-3)">' + (i + 1) + '</span><span class="sp">' + esc(x.q) + '</span><span class="pill flat">' + (x.type === "multi" ? "multi" : x.type === "tf" ? "T/F" : "single") + '</span></div>').join("") + '</div>' +
+    '<button class="btn sm" id="qAdd" style="width:fit-content">+ Add question</button>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="qSave">Save test</button>');
+  $("#qAdd").onclick = () => {
+    q.questions.push(Q("New question — edit me", ["Option A", "Option B", "Option C", "Option D"], 0));
+    save(); quizModal(cid);
+  };
+  $("#qSave").onclick = () => {
+    q.passScore = +$("#qP").value || q.passScore; q.attempts = +$("#qA").value || q.attempts;
+    q.timeLimit = +$("#qL").value || 0; q.randomize = $("#qR").checked;
+    save(); closeModal(); toast("Test settings saved"); render();
+  };
+}
+</script>
+<script>
+/* ============ SETTINGS ============ */
+function pageSettings(v) {
+  let h = '<div class="page-head"><div><h1>School Settings</h1><p>Turn features on as the team grows. Nothing needs rebuilding.</p></div></div>';
+  h += '<div class="card"><div class="eyebrow">Interface mode</div><h3 style="font-size:17px;margin:4px 0 12px">' + (S.mode === "simple" ? "Simple mode" : "Expanded mode") + '</h3>' +
+    '<div class="modebar"><button class="' + (S.mode === "simple" ? "on" : "") + '" data-mode="simple">Simple</button><button class="' + (S.mode === "expanded" ? "on" : "") + '" data-mode="expanded">Expanded</button></div>' +
+    '<p class="muted" style="margin:12px 0 0;font-size:13.5px">Simple mode keeps the student side to Dashboard, Courses, Certificates, Community, Research and Profile. Expanded mode turns on the rest of what is already built.</p></div>';
+  h += '<div class="card" style="margin-top:16px"><div class="eyebrow">Feature control</div><h3 style="font-size:17px;margin:4px 0 8px">What students can see</h3>' +
+    Object.keys(FLAG_META).map(k => '<div class="flag"><div class="t"><b>' + esc(FLAG_META[k][0]) + '</b><small>' + esc(FLAG_META[k][1]) + '</small></div>' +
+      '<span class="mono" style="font-size:11px;color:var(--text-3)">' + k + '</span>' +
+      '<button class="sw' + (S.flags[k] ? " on" : "") + '" role="switch" aria-checked="' + !!S.flags[k] + '" aria-label="' + esc(FLAG_META[k][0]) + '" data-flag="' + k + '"></button></div>').join("") + '</div>';
+  h += '<div class="card" style="margin-top:16px"><div class="eyebrow">Certificate</div>' +
+    '<label class="fld" style="margin-top:10px">Academy name<input id="setName" value="' + esc(S.schoolName) + '"></label>' +
+    '<label class="fld" style="margin-top:10px">Signed by<input id="setSign" value="' + esc(S.signer) + '"></label>' +
+    '<div class="row" style="margin-top:12px"><button class="btn pri" id="setSave">Save</button></div></div>';
+  h += '<div class="card" style="margin-top:16px"><div class="eyebrow">Roles</div><h3 style="font-size:17px;margin:4px 0 8px">Admin and VA / Student are live</h3>' +
+    '<p class="muted" style="margin:0;font-size:13.5px">Instructor, Team Lead and Manager are in the data model and switch on from Feature Control when you need them.</p>' +
+    '<div class="row" style="margin-top:10px"><span class="pill ok">Admin</span><span class="pill ok">VA / Student</span><span class="pill flat">Instructor</span><span class="pill flat">Team Lead</span><span class="pill flat">Manager</span></div></div>';
+  h += '<div class="card" style="margin-top:16px"><div class="eyebrow">Data &amp; backup</div><h3 style="font-size:17px;margin:4px 0 8px">' + (storageOK && !saveFailed ? "Saving to this browser" : "Not saving to this browser") + '</h3>' +
+    '<p class="muted" style="margin:0 0 12px;font-size:13.5px">' + (DB && dbReady
+      ? "Courses, lessons, tests, students and certificates are stored on the server. They survive a refresh and follow you to any browser or computer where you open this page."
+      : storageOK && !saveFailed
+      ? "Saved to this browser only. It does not follow you to another computer — export a backup before switching."
+      : "This browser is blocking local storage, so changes are lost on refresh. Export a backup now, or use the published version of the page.") + '</p>' +
+    '<div class="row"><button class="btn" id="expBtn">Export backup</button><button class="btn" id="impBtn">Import backup</button>' +
+    '<input type="file" id="impFile" accept="application/json,.json" style="display:none;width:auto"></div></div>';
+  h += '<div class="card" style="margin-top:16px"><div class="eyebrow">Demo content</div><h3 style="font-size:17px;margin:4px 0 8px">Sample courses are marked DEMO</h3>' +
+    '<p class="muted" style="margin:0 0 12px;font-size:13.5px">Editing a course or lesson clears its DEMO tag. Resetting restores the sample school.</p>' +
+    '<button class="btn danger" id="resetBtn">Reset to sample content</button></div>';
+  v.innerHTML = h;
+  v.querySelectorAll("[data-flag]").forEach(b => b.onclick = () => {
+    const k = b.dataset.flag; S.flags[k] = !S.flags[k];
+    if (S.flags[k] && SIMPLE_OFF.includes(k)) S.mode = "expanded";
+    save(); render();
+  });
+  v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => {
+    S.mode = b.dataset.mode;
+    if (S.mode === "simple") SIMPLE_OFF.forEach(k => S.flags[k] = false);
+    else SIMPLE_OFF.forEach(k => S.flags[k] = true);
+    save(); toast(S.mode === "simple" ? "Simple mode on" : "Expanded mode on"); render();
+  });
+  $("#setSave").onclick = () => { S.schoolName = $("#setName").value.trim() || S.schoolName; S.signer = $("#setSign").value.trim() || S.signer; save(); toast("Saved"); };
+  $("#expBtn").onclick = exportData;
+  $("#impBtn").onclick = () => $("#impFile").click();
+  $("#impFile").onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => importData(r.result); r.readAsText(f); };
+  $("#resetBtn").onclick = () => { resetAll(); me = userById(me.id) || S.users[0]; toast("Sample content restored"); go(me.role === "admin" ? "adash" : "dash"); };
+  wire(v);
+}
+
+/* ============ SHARED MODALS ============ */
+function annModal() {
+  modal("New announcement", '<label class="fld">Title<input id="anT" placeholder="New Escrow Course Added"></label>' +
+    '<label class="fld">Message<textarea id="anB" rows="3"></textarea></label>' +
+    '<label class="fld" style="flex-direction:row;align-items:center;gap:10px"><input type="checkbox" id="anP" style="width:auto" checked> Pin to the student dashboard</label>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="anGo">Publish</button>');
+  $("#anGo").onclick = () => {
+    const t = $("#anT").value.trim(); if (!t) { toast("Title is required."); return; }
+    S.ann.unshift({ id: uid("a"), title: t, body: $("#anB").value.trim(), when: new Date().toISOString().slice(0, 10), pin: $("#anP").checked });
+    S.notifs.unshift({ id: uid("n"), text: "New announcement: " + t, when: new Date().toISOString().slice(0, 10), to: "all" });
+    save(); closeModal(); toast("Announcement published"); render();
+  };
+}
+const PW_A = ["Escrow","Title","Ledger","Anchor","Harbor","Summit","Compass","Beacon","Cypress","Granite"];
+const PW_B = ["Lark","Falcon","Cedar","Quartz","Aspen","Ember","Ridge","Willow","Onyx","Heron"];
+function genPass() {
+  return PW_A[Math.floor(Math.random() * PW_A.length)] + "-" + PW_B[Math.floor(Math.random() * PW_B.length)] + "-" + Math.floor(1000 + Math.random() * 8999);
+}
+function inviteBody(u) {
+  return "To: " + u.email + "\nSubject: Your " + S.schoolName + " login\n\nHi " + u.name.split(" ")[0] + ",\n\n" +
+    "Your training account is ready.\n\n" +
+    "Sign-in email: " + u.email + "\n" +
+    "Temporary password: " + u.tempPass + "\n\n" +
+    "You will be asked to set your own password the first time you sign in. Start with the course on your dashboard and work through it in order — each lesson has a short video and the course ends with a test you need to pass.\n\n" +
+    "— " + S.signer;
+}
+function studentModal(editId) {
+  const u = editId ? userById(editId) : null;
+  const pw = u && u.tempPass ? u.tempPass : genPass();
+  modal(u ? "Edit VA" : "Add VA",
+    '<label class="fld">Full name<input id="sN" value="' + esc(u ? u.name : "") + '" placeholder="Grace Tan"></label>' +
+    '<label class="fld">Email address <span style="font-weight:400;color:var(--text-3)">— this is their sign-in ID</span><input id="sE" type="email" value="' + esc(u ? u.email : "") + '" placeholder="grace.tan@example.com"></label>' +
+    '<label class="fld">Phone number<input id="sP" type="tel" value="' + esc(u ? u.phone : "") + '" placeholder="+63 917 555 0410"></label>' +
+    '<label class="fld">Role / title<input id="sT" value="' + esc(u ? u.title : "") + '" placeholder="Transaction VA"></label>' +
+    '<div><div class="eyebrow" style="margin-bottom:5px">Temporary password</div>' +
+    '<div class="row" style="gap:8px"><input id="sPW" class="mono" value="' + esc(pw) + '" readonly style="flex:1">' +
+    '<button class="btn sm" id="sRegen" type="button">New</button><button class="btn sm" id="sCopy" type="button">Copy</button></div>' +
+    '<div class="muted" style="font-size:12.5px;margin-top:5px">Generated automatically. The VA is asked to set their own password at first sign-in.</div></div>' +
+    '<label class="fld" style="flex-direction:row;align-items:center;gap:10px"><input type="checkbox" id="sMail" style="width:auto" checked> Email these login details to the VA</label>' +
+    '<div class="ai-note">This prototype shows you the invitation instead of sending it. On the live build Supabase Auth creates the account and sends the email for real.</div>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="sGo">' + (u ? "Save VA" : "Add VA & send invite") + '</button>');
+  $("#sRegen").onclick = () => { $("#sPW").value = genPass(); };
+  $("#sCopy").onclick = () => {
+    const el = $("#sPW"); el.select();
+    try { navigator.clipboard.writeText(el.value); toast("Password copied"); } catch (e) { toast("Select and copy the password"); }
+  };
+  $("#sGo").onclick = () => {
+    const n = $("#sN").value.trim(), em = $("#sE").value.trim(), ph = $("#sP").value.trim();
+    if (!n) { toast("Name is required."); return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { toast("Enter a valid email address — it is their sign-in ID."); return; }
+    if (S.users.some(x => x.email && x.email.toLowerCase() === em.toLowerCase() && (!u || x.id !== u.id))) { toast("That email is already used by another VA."); return; }
+    const sendMail = $("#sMail").checked, today = new Date().toISOString().slice(0, 10);
+    let rec;
+    if (u) {
+      Object.assign(u, { name: n, email: em, phone: ph, title: $("#sT").value.trim() || u.title, tempPass: $("#sPW").value });
+      rec = u;
+    } else {
+      rec = { id: uid("u"), name: n, role: "student", title: $("#sT").value.trim() || "Virtual Assistant",
+        joined: today, email: em, phone: ph, status: "invited", tempPass: $("#sPW").value, inviteSentAt: sendMail ? today : null };
+      S.users.push(rec);
+    }
+    if (sendMail) { rec.inviteSentAt = today; rec.status = rec.status === "active" ? "active" : "invited"; }
+    save(); closeModal();
+    if (sendMail) invitePreview(rec); else { toast(u ? "VA saved" : "VA added"); render(); }
+  };
+}
+function invitePreview(u) {
+  modal("Invitation sent to " + u.name,
+    '<div class="row" style="gap:8px"><span class="pill ok">Queued</span><span class="muted" style="font-size:13px">' + esc(u.email) + '</span></div>' +
+    '<div class="card mono" style="white-space:pre-wrap;font-size:12.5px;background:var(--surface-2);line-height:1.6">' + esc(inviteBody(u)) + '</div>' +
+    '<div class="ai-note">Prototype preview. On the live build this leaves your sending domain the moment you click Add VA.</div>',
+    '<button class="btn" id="ivCopy">Copy message</button><button class="btn pri" onclick="closeModal();render()">Done</button>');
+  $("#ivCopy").onclick = () => { try { navigator.clipboard.writeText(inviteBody(u)); toast("Copied"); } catch (e) { toast("Select the text to copy"); } };
+}
+function kbModalEdit(id) {
+  const a = id ? S.kb.find(x => x.id === id) : null;
+  modal(a ? "Edit article" : "New article",
+    '<label class="fld">Title<input id="kT" value="' + esc(a ? a.title : "") + '"></label>' +
+    '<label class="fld">Category<input id="kC" value="' + esc(a ? a.cat : "") + '" placeholder="Escrow"></label>' +
+    '<label class="fld">Article<textarea id="kB" rows="8">' + esc(a ? a.body : "") + '</textarea></label>',
+    '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="kGo">Save</button>');
+  $("#kGo").onclick = () => {
+    const t = $("#kT").value.trim(); if (!t) { toast("Title is required."); return; }
+    if (a) { a.title = t; a.cat = $("#kC").value.trim() || a.cat; a.body = $("#kB").value; }
+    else S.kb.unshift({ id: uid("kb"), title: t, cat: $("#kC").value.trim() || "General", body: $("#kB").value });
+    save(); closeModal(); toast("Article saved"); render();
+  };
+}
+function notifModal() {
+  modal("Notifications", S.notifs.length
+    ? '<div class="grid">' + S.notifs.slice(0, 8).map(n => '<div class="res"><div style="flex:1">' + esc(n.text) + '<div class="muted" style="font-size:12px">' + fmtDate(n.when) + '</div></div></div>').join("") + '</div>'
+    : '<div class="empty">Nothing new.</div>', '<button class="btn" onclick="closeModal()">Close</button>');
+}
+</script>
+<script>
+function wire(root) {
+  const q = (s) => Array.from(root.querySelectorAll(s));
+  q("[data-course]").forEach(el => el.onclick = () => go("course", { id: el.dataset.course }));
+  q("[data-lesson]").forEach(el => el.onclick = () => go("lesson", { id: el.dataset.lesson }));
+  q("[data-cert]").forEach(el => el.onclick = (e) => { e.stopPropagation(); go("cert", { id: el.dataset.cert }); });
+  q("[data-certu]").forEach(el => el.onclick = (e) => { e.stopPropagation(); const [u, c] = el.dataset.certu.split("|"); go("cert", { id: c, uid: u }); });
+  q("[data-student]").forEach(el => el.onclick = () => go("student", { id: el.dataset.student }));
+  q("[data-builder]").forEach(el => el.onclick = () => go("builder", { id: el.dataset.builder }));
+  q("[data-builder2]").forEach(el => el.onclick = (e) => { e.stopPropagation(); go("builder", { id: el.dataset.builder2 }); });
+  q("[data-cup]").forEach(el => el.onclick = (e) => { e.stopPropagation(); moveCourse(el.dataset.cup, -1); });
+  q("[data-cdown]").forEach(el => el.onclick = (e) => { e.stopPropagation(); moveCourse(el.dataset.cdown, 1); });
+  q("[data-kb]").forEach(el => el.onclick = (e) => { e.stopPropagation(); kbModal(el.dataset.kb); });
+  q("[data-editkb]").forEach(el => el.onclick = (e) => { e.stopPropagation(); kbModalEdit(el.dataset.editkb); });
+  q("[data-post]").forEach(el => el.onclick = (e) => { if (e.target.closest("[data-like]")) return; go("post", { id: el.dataset.post }); });
+  q("[data-like]").forEach(el => el.onclick = (e) => {
+    e.stopPropagation(); const p = S.posts.find(x => x.id === el.dataset.like); if (p) { p.likes++; save(); render(); }
+  });
+  q("[data-cat]").forEach(el => el.onclick = () => go(me.role === "admin" ? "acommunity" : "community", { cat: el.dataset.cat }));
+  q("[data-delpost]").forEach(el => el.onclick = () => { S.posts = S.posts.filter(p => p.id !== el.dataset.delpost); save(); toast("Post deleted"); go("community"); });
+  q("[data-edituser]").forEach(el => el.onclick = (e) => { e.stopPropagation(); studentModal(el.dataset.edituser); });
+  q("[data-resend]").forEach(el => el.onclick = (e) => {
+    e.stopPropagation(); const u = userById(el.dataset.resend);
+    if (!u.email) { toast("Add an email address first."); return; }
+    u.inviteSentAt = new Date().toISOString().slice(0, 10);
+    if (!u.tempPass) u.tempPass = genPass();
+    save(); invitePreview(u);
+  });
+  q("[data-resetpw]").forEach(el => el.onclick = (e) => {
+    e.stopPropagation(); const u = userById(el.dataset.resetpw);
+    u.tempPass = genPass(); u.status = "invited"; u.inviteSentAt = new Date().toISOString().slice(0, 10);
+    save(); toast("New password generated"); invitePreview(u);
+  });
+  q("[data-reset]").forEach(el => el.onclick = (e) => {
+    e.stopPropagation(); const [u, c] = el.dataset.reset.split("|");
+    S.attempts[u] = (S.attempts[u] || []).filter(a => a.courseId !== c);
+    S.certs[u] = (S.certs[u] || []).filter(x => x.courseId !== c);
+    save(); toast("Attempts reset"); render();
+  });
+  /* builder */
+  q("[data-addmod]").forEach(el => el.onclick = () => {
+    const c = courseById(el.dataset.addmod);
+    c.modules.push({ id: uid("m"), title: "Module " + (c.modules.length + 1), lessons: [] });
+    save(); render();
+  });
+  q("[data-addles]").forEach(el => el.onclick = () => {
+    const [cid, mid] = el.dataset.addles.split("|");
+    const m = courseById(cid).modules.find(x => x.id === mid);
+    const nl = L("New lesson", 10, "Describe what this lesson covers.", [], []);
+    nl.demo = false; m.lessons.push(nl); save(); lessonModal(nl.id);
+  });
+  q("[data-renmod]").forEach(el => el.onclick = () => {
+    const [cid, mid] = el.dataset.renmod.split("|");
+    const m = courseById(cid).modules.find(x => x.id === mid);
+    modal("Rename module", '<label class="fld">Module title<input id="mT" value="' + esc(m.title) + '"></label>',
+      '<button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" id="mGo">Save</button>');
+    $("#mGo").onclick = () => { m.title = $("#mT").value.trim() || m.title; save(); closeModal(); render(); };
+  });
+  q("[data-delmod]").forEach(el => el.onclick = () => {
+    const [cid, mid] = el.dataset.delmod.split("|"); const c = courseById(cid);
+    c.modules = c.modules.filter(m => m.id !== mid); save(); toast("Module deleted"); render();
+  });
+  q("[data-editles]").forEach(el => el.onclick = () => lessonModal(el.dataset.editles));
+  q("[data-duples]").forEach(el => el.onclick = () => {
+    const [cid, mid, lid] = el.dataset.duples.split("|");
+    const m = courseById(cid).modules.find(x => x.id === mid);
+    const i = m.lessons.findIndex(x => x.id === lid);
+    const copy = JSON.parse(JSON.stringify(m.lessons[i])); copy.id = uid("les"); copy.title += " (copy)";
+    m.lessons.splice(i + 1, 0, copy); save(); toast("Lesson duplicated"); render();
+  });
+  q("[data-delles]").forEach(el => el.onclick = () => {
+    const [cid, mid, lid] = el.dataset.delles.split("|");
+    const m = courseById(cid).modules.find(x => x.id === mid);
+    m.lessons = m.lessons.filter(x => x.id !== lid); save(); toast("Lesson deleted"); render();
+  });
+  q("[data-quizedit]").forEach(el => el.onclick = () => quizModal(el.dataset.quizedit));
+  /* generic actions */
+  q("[data-act]").forEach(el => el.onclick = () => {
+    const a = el.dataset.act, id = el.dataset.id;
+    if (a === "continue") { const n = nextLesson(me.id); if (n) go("lesson", { id: n.lesson.id }); }
+    else if (a === "quiz") { QZ = null; go("quiz", { id }); }
+    else if (a === "back") go("course", { id });
+    else if (a === "newpost") newPostModal();
+    else if (a === "allposts") go("community");
+    else if (a === "newcourse") courseModal(null);
+    else if (a === "editcourse") courseModal(id);
+    else if (a === "dupcourse") {
+      const c = JSON.parse(JSON.stringify(courseById(id)));
+      c.id = uid("c"); c.title += " (copy)"; c.prereq = null;
+      c.modules.forEach(m => { m.id = uid("m"); m.lessons.forEach(l => l.id = uid("les")); });
+      c.finalQuiz.questions.forEach(x => x.id = uid("q"));
+      S.courses.push(c); save(); toast("Course duplicated"); go("builder", { id: c.id });
+    }
+    else if (a === "newann") annModal();
+    else if (a === "newstudent") studentModal();
+    else if (a === "newkb") kbModalEdit(null);
+    else if (a === "researchq") go("research", { q: id });
+    else go(a);
+  });
+}
+
+/* ============ BOOT ============ */
+function renderAuth() {
+  $("#whoList").innerHTML = S.users.map(u =>
+    '<button data-u="' + u.id + '"><span class="av">' + initials(u.name) + '</span><span><span class="nm">' + esc(u.name) + '</span><span class="rl">' + esc(u.email || (u.role === "admin" ? "Administrator" : u.title)) + '</span></span></button>').join("");
+  $("#whoList").querySelectorAll("[data-u]").forEach(b => b.onclick = () => signIn(b.dataset.u));
+}
+function signIn(id, page, params) {
+  me = userById(id); if (!me) return;
+  $("#auth").style.display = "none";
+  $("#app").classList.add("on");
+  go(page || (me.role === "admin" ? "adash" : "dash"), params);
+}
+function signOut() {
+  me = null; QZ = null;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  $("#app").classList.remove("on");
+  $("#auth").style.display = "grid";
+  renderAuth();
+}
+window.addEventListener("error", (e) => { try { toast("Error: " + (e.message || e.error)); } catch (x) {} });
+window.addEventListener("unhandledrejection", (e) => { try { toast("Error: " + ((e.reason && e.reason.message) || e.reason)); } catch (x) {} });
+(function boot() {
+  storageOK = probeStorage();
+  if (!load()) { S = freshState(); seedProgress(); save(); }
+  if (!S.flags) S.flags = Object.assign({}, DEFAULT_FLAGS);
+  renderAuth();
+  $("#signout").onclick = signOut;
+  $("#burger").onclick = () => { sideOpen = !sideOpen; $("#side").classList.toggle("open", sideOpen); };
+  $("#bellBtn").onclick = notifModal;
+  $("#warnExport").onclick = exportData;
+  const sd = document.getElementById("saveDot");
+  if (sd) { sd.style.cursor = "pointer"; sd.onclick = async () => { if (DB && dbReady) { await dbFlush(); toast("Saved"); } else { await dbInit(true); if (DB && dbReady) { await dbFlush(); toast("Saving is on"); render(); } } }; }
+  $("#warnEnable").onclick = async () => { toast("Asking for storage access…"); await dbInit(true); if (DB && dbReady) { toast("Saving is on"); await dbFlush(); render(); } else toast("Still blocked — use the published page, not a local file"); };
+  $("#themeBtn").onclick = () => {
+    const cur = document.documentElement.getAttribute("data-theme");
+    const dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
+  };
+  const gs = $("#globalSearch");
+  gs.onkeydown = (e) => { if (e.key === "Enter" && gs.value.trim()) { go("search", { q: gs.value.trim() }); } };
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+  paintSaveDot();
+  const hs = readHash();
+  if (hs.u && userById(hs.u)) signIn(hs.u, hs.p, { id: hs.id, uid: hs.uid });
+  dbInit();
+})();
+</script>
+
+</body></html>
